@@ -16,8 +16,8 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 
 const Walkthrough = ({route, navigation}) => {
 
-    
         const [images, setImages] = React.useState([]);
+        const [chooseState, setChoosestate] = React.useState(false);
 
         const openImagePicker = () => {
             let imageList = [];
@@ -28,25 +28,33 @@ const Walkthrough = ({route, navigation}) => {
                 includeExif: true,
                 forceJpg: true,
                 compressImageQuality: 0.8,
-                maxFiles: 10,
+                minFiles: 10,
+                maxFiles: 20,
                 mediaType: 'photo',
                 includeBase64: true,
             })
             .then(response => {
-                console.log('Response: ', response);
+                // console.log('Response: ', response);
+                response.map(image => {
+                    imageList.push({
+                        filename: image.filename,
+                        path: image.path,
+                        data: image.data,
+                    });
+                    setImages(imageList);
+                })
+            .then(setChoosestate(true))
+            .catch(e => console.log('Error ', e.message));
             })
 
-            return (
-                <View
-                style= {{
-                    flex:1
-                }}>
-
-                </View>
-
-            )
         }
     
+    //이미지 리스트 api연결 중
+    const sendImages = (images) => {
+        fetch(``,{method: "POST"})
+        .then((res)=>res.json())
+
+    }
 
     //API정보 이용 시
     const [userName, setUserName] = React.useState("");
@@ -135,12 +143,12 @@ const Walkthrough = ({route, navigation}) => {
                 <Dots />
 
                 {/*Buttons*/}
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        height: 55
-                    }}
-                >
+                {chooseState ? <View></View> :   
+                   <View
+                   style={{
+                    flexDirection: 'row',
+                    height: 55
+                }}>
                     <TextButton
                         label="추천없이 사용"
                         contentContainerStyle={{
@@ -156,7 +164,7 @@ const Walkthrough = ({route, navigation}) => {
                             navigation.navigate("Home", {token: token})
                     }}
                     />
-                    {/*원래 로그인 이었던 것*/}
+                    
                     <TextButton
                         label="포즈 추천받기" 
                         contentContainerStyle={{
@@ -170,8 +178,8 @@ const Walkthrough = ({route, navigation}) => {
                         }}
                         onPress= {openImagePicker}
                     />
-
-                </View>
+                    </View>
+                }
             </View>
         )
     }
@@ -183,9 +191,11 @@ const Walkthrough = ({route, navigation}) => {
                 backgroundColor: COLORS.light
             }}
         >
-            <Text>
-                {userName}님 반갑습니다!
-            </Text>
+            {chooseState ?
+            <Text>{userName}님의 데이터를 분석중입니다.</Text> 
+              : <Text> {userName}님 반갑습니다! </Text> 
+          }
+            
             <Animated.FlatList
                 data={constants.walkthrough}
                 keyExtractor={(item) => item.id}
