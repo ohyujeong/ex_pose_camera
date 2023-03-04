@@ -20,7 +20,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { IconButton } from "../../components";
 
 
-const FrameModal = ({ isVisible, onClose, selectedFrameId, showFrame }) => {
+const FrameModal = ({ isVisible, onClose, selectedFrameId, BaseUrl }) => {
 
   const modalAnimatedValue = React.useRef(new Animated.Value(0)).current
   const [showFrameModal, setShowFrameModal] = React.useState(isVisible)
@@ -28,7 +28,6 @@ const FrameModal = ({ isVisible, onClose, selectedFrameId, showFrame }) => {
   const frameId = selectedFrameId
     
   console.log(frameId)
-  const BaseUrl = "http://52.79.250.39:8080";
   const frameUrl = `${BaseUrl}/frame/{frameId}?frameId=${frameId}`;
   // const [framePath, setFramePath] = React.useState('')
   const [data, setData] = React.useState([]);
@@ -70,57 +69,5 @@ React.useEffect(()=> {
     )
 }
 
-  // const modalY = modalAnimatedValue.interpolate({
-  //   inputRange: [0,1],
-  //   outputRange: [SIZES.height, SIZES.height-700]
-  // });
-
-  // useEffect(()=> {
-  //   if(showFrameModal) {
-  //       Animated.timing(modalAnimatedValue,{
-  //         toValue:1,
-  //         duration: 500,
-  //         useNativeDriver: false
-  //       }).start();
-  //   } else {
-  //     Animated.timing(modalAnimatedValue,{
-  //       toValue:0,
-  //       duration: 500,
-  //       useNativeDriver: false
-  //     }).start(()=> onClose());
-  //   } 
-  // }, [showFrameModal])
-
-
-  // return (
-  //   <Modal
-  //     animationType="fade"
-  //     transparent={true}
-  //     visible={isVisible}
-  //     >
-  //       <View
-  //         style={{
-  //           flex: 1
-  //         }}
-  //         >
-
-  //           <Animated.View
-  //             style={{
-  //               position: 'absolute',
-  //               left: 0,
-  //               top: modalY,
-  //               width: "100%",
-  //               height: "80%",
-  //               padding: SIZES.padding,
-  //               backgroundColor: COLORS.lightGrey20
-  //             }}>
-  //         <View>
-  //         {FrameLoad()}
-  //         </View>
-  //           </Animated.View>
-  //         </View>
-  //     </Modal>
-  // )
-// }
 
 export default FrameModal;

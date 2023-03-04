@@ -19,13 +19,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { FrameModal } from "..";
 
-const BaseUrl = "http://52.79.250.39:8080";
-const userRecListApi = `${BaseUrl}/frame/recommend`;
-const userMyListApi = `${BaseUrl}/frame/like`
-const categoryUrl = `${BaseUrl}/frame?category=`;
-
 // 토큰 받기 token, loadFrameModal 사용해서 selectedFrameId넘김
-const FilterModal = ({ isVisible, onClose, token, loadFrameModal }) => {
+const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => {
+  const userRecListApi = `${BaseUrl}/frame/recommend`;
+  const userMyListApi = `${BaseUrl}/frame/like`
+  const categoryUrl = `${BaseUrl}/frame?category=`;
 
   const modalAnimatedValue = React.useRef(new Animated.Value(0)).current
   const [showFilterModal, setShowFilterModal] = React.useState(isVisible)

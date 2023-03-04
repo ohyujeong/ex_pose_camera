@@ -52,7 +52,7 @@ class Login extends React.Component {
       fetch(`${KAKAO_AUTH_URL}`)
       .then((res) => res.json())
       .then(res => {
-      console.log(res)
+      // console.log(res)
       const token = res.data.jwtToken
       console.log(token)
       //2/13 토큰 전달 완료

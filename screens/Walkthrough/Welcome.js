@@ -9,7 +9,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { TextButton } from "../../components";
 import { COLORS, FONTS, SIZES, images } from '../../constants';
-import axios from 'axios';
 
 const Welcome = ({ navigation }) => {
     
@@ -62,7 +61,7 @@ const Welcome = ({ navigation }) => {
                     label="로그인하기"
                     onPress={() => navigation.navigate("Login")}
                 />
-                
+
                 <TextButton
                     contentContainerStyle={{
                         height: 50,

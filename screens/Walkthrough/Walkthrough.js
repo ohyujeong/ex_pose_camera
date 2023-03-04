@@ -44,6 +44,7 @@ const Walkthrough = ({route, navigation}) => {
                     setImages(imageList);
                 })
             .then(setChoosestate(true))
+            .then(sendImages(imageList))
             .catch(e => console.log('Error ', e.message));
             })
 
@@ -51,9 +52,23 @@ const Walkthrough = ({route, navigation}) => {
     
     //이미지 리스트 api연결 중
     const sendImages = (images) => {
-        fetch(``,{method: "POST"})
-        .then((res)=>res.json())
+        const testList = [];
+        const test = () => {
+            
+            for (let i =0; i<images.length; i++) {
+            console.log("test message")
+            // fetch(``,{method: "POST"})
+            // .then((res)=>res.json())
+            testList.push(images[i].filename);
+            }
+            return testList;
+        }
 
+        
+        test();
+        return (
+            console.log(testList)
+        )
     }
 
     //API정보 이용 시
@@ -191,10 +206,10 @@ const Walkthrough = ({route, navigation}) => {
                 backgroundColor: COLORS.light
             }}
         >
-            {chooseState ?
+            {/* {chooseState ?
             <Text>{userName}님의 데이터를 분석중입니다.</Text> 
               : <Text> {userName}님 반갑습니다! </Text> 
-          }
+          } */}
             
             <Animated.FlatList
                 data={constants.walkthrough}

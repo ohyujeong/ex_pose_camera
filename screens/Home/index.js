@@ -50,9 +50,9 @@ import {useRoute} from "@react-navigation/native";
 // import { SAFE_AREA_PADDING } from './Constants';
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 
-// import { Svg, Defs, Mask } from "react-native-svg";
-
 const Home = ({ route, navigation }) => {
+
+  const BaseUrl = "http://52.79.250.39:8080";
 
   const camera = React.useRef(null);
   const [showCamera, setShowCamera] = React.useState(false);
@@ -75,7 +75,6 @@ const Home = ({ route, navigation }) => {
   const [showGalleryModal, setShowGalleryModal] = React.useState(false)
   const [showFrameModal, setShowFrameModal] = React.useState(false)
   const [selectedFrameId, setSelectedFrameId] = React.useState('')
-  const [getFrameUrl, setGetFrameUrl] = React.useState(false)
   // const [frameUrl, setFrameUrl] = React.useState('')
 
 
@@ -135,30 +134,68 @@ const Home = ({ route, navigation }) => {
   };
 
 const onSavePressed = React.useCallback(async () => {
+  if (selectedFrameId == '') {
   try {
-    // setSavingState('saving');
-    // const hasPermission = await requestSavePermission();
-    // if (!hasPermission) {
-    //   alert('Permission denied!', 'Vision Camera does not have permission to save the media to your camera roll.');
-    //   return;
-    // }
     await CameraRoll.save(`file://${imageSource}`);
     setShowCamera(true);
-    // setSavingState('saved');
+    console.log(selectedFrameId);
+
   } catch (e) {
     const message = e instanceof Error ? e.message : JSON.stringify(e);
     // setSavingState('none');
     alert('Failed to save!', `An unexpected error occured while trying to save your photo. ${message}`);
   }
+}
+else {
+  try {
+    fetch(`${BaseUrl}/frame/use?frameId=${selectedFrameId}`,{
+      method : "PATCH",
+      headers : {
+          Authorization : `Bearer ${token}`
+      }
+      })
+  //취향 업데이트 확인 완료
+  //  .then((res)=>res.json())
+  //  .then(res => console.log(res))
+   .catch(console.error)
+
+    await CameraRoll.save(`file://${imageSource}`);
+    setShowCamera(true);
+    
+  } catch (e) {
+    const message = e instanceof Error ? e.message : JSON.stringify(e);
+    // setSavingState('none');
+    alert('Failed to save!', `An unexpected error occured while trying to save your photo. ${message}`);
+  }
+}
+
 }, [imageSource]);
 
+//사진찍고 사용된 프레임 정보 전달까지
+// const saveAndUpdate = () => {
+//   onSavePressed();
+//   fetch(`${BaseUrl}/frame/use?frameId=${selectedFrameId}`,{
+//     method : "PATCH",
+//     headers : {
+//         Authorization : `Bearer ${token}`
+//     }
+//     })
+//  .catch(console.error)
+// }
 
+const frameCloseNnull = () => {
+  setShowFrameModal(false);
+  return (
+  setSelectedFrameId('')
+  )
+}
 
   function renderHeader() {
     return(
       <View
        style={{
         flexDirection:'row',
+      
         paddingTop: SIZES.padding * 2,
         paddingBottom: SIZES.radius,
         paddingHorizontal: SIZES.padding,
@@ -225,8 +262,9 @@ const onSavePressed = React.useCallback(async () => {
        }}>
       <FrameModal
         isVisible={showFrameModal}
-        onClose={() => setShowFrameModal(false)}
+        onClose={() => frameCloseNnull()}
         selectedFrameId={selectedFrameId}
+        BaseUrl={BaseUrl}
         />
         </View>
       } 
@@ -296,6 +334,7 @@ const onSavePressed = React.useCallback(async () => {
         //자식 FilterModal로 token전달
         token={token}
         loadFrameModal={loadFrameModal}
+        BaseUrl={BaseUrl}
         />}
   
       {showGalleryModal &&
