@@ -8,7 +8,9 @@ import {
   Modal,
   TouchableOpacity,
   ActivityIndicator,
-  Image
+  Image,
+  Button,
+  TextButton
 } from 'react-native';
 
 import { COLORS, FONTS, SIZES, constants, icons, dummyData } from "../../constants";
@@ -160,9 +162,9 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
           onPress={()=> loadFrameModal(item.frameId)}>
           <Image
           source={{uri: item.framePath}}
-          style={{width:150,
-          height:150}}
+          style={{width:150,height:150}}
           resizeMode= 'contain'
+          backgroundColor=''
           />
           </TouchableOpacity>
           
@@ -187,7 +189,14 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
             </TouchableOpacity>
           
           <View>
-            <Text> {`${item.frameName}`} </Text>
+            <Text
+            style={{
+              color: "white",
+              marginTop: 10,
+              textAlign: 'center',
+            }
+            }
+            > {`${item.frameName}`} </Text>
           </View>
 
         </View>
@@ -221,7 +230,7 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           marginTop: 5,
-          marginBottom: 20
+          marginBottom: 20,
         }}
         
         renderItem={({ item, index }) => (
@@ -232,15 +241,22 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
             }}
             
         > 
-        <Text
-        style={{
-          color: COLORS.white == item.id ? COLORS.primary : COLORS.black,
-          ...FONTS.h3
-        }}
+      <Text
+        style={{backgroundColor:'#FFCACA', 
+        textAlign: 'center',
+        fontWeight: 'bold',
+        borderRadius:5,
+        width:65,
+        height:23,
+        color: COLORS.white == item.id ? COLORS.primary : COLORS.black,
+        ...FONTS.h3
+      }}
+        // color: COLORS.white == item.id ? COLORS.primary : COLORS.black,
+        //   ...FONTS.h3
+        // }}
         onPress={()=>setSelectedCategory(item.category)}
         >
-          {item.name}
-          
+        {item.name}
         </Text>
         </TouchableOpacity>
         )}
@@ -254,13 +270,19 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
       transparent={true}
       visible={isVisible}
       >
+
+      {/* <View>
+      <Button
+        title="Press me"
+        onPress={() => Alert.alert('Simple Button pressed')}
+      />
+        </View> */}
+
         <View
           style={{
             flex: 1
           }}
           >
-            
-        
             <TouchableWithoutFeedback
               onPress={() => setShowFilterModal(false)}>
                 <View
@@ -273,7 +295,6 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
                   }}
                 />
             </TouchableWithoutFeedback>
-
             <Animated.View
               style={{
                 position: 'absolute',
@@ -282,20 +303,16 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
                 width: "100%",
                 height: "100%",
                 padding: SIZES.padding,
-                backgroundColor: COLORS.grey
+                backgroundColor: '#251B37'
+                // backgroundColor: '#4B4B4B'
               }}>
           <View>
             {renderFilterOption()}
             {frameList(selectedCategory)}
           </View>
             </Animated.View>
-
-            
-
           </View>
       </Modal>
-
-      
   )
 }
 
