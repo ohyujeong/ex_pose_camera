@@ -41,7 +41,7 @@ const cameraFlipIcon = require('../assets/icons/cameraFlipIcon.png');
 
 const outlineStar = require('../assets/icons/outline_star.png');
 const star = require('../assets/icons/star.png');
-
+const cam = require('../assets/icons/cam.png');
 
 export default {
     arrow_down_fill,
@@ -85,5 +85,6 @@ export default {
     cameraButton,
     cameraFlipIcon,
     outlineStar,
-    star
+    star,
+    cam
 }
