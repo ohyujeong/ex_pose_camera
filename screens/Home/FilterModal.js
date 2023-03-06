@@ -164,7 +164,6 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
           source={{uri: item.framePath}}
           style={{width:150,height:150}}
           resizeMode= 'contain'
-          backgroundColor=''
           />
           </TouchableOpacity>
           
@@ -175,19 +174,18 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
             left: 7,
           }}
           onPress={()=> likeUpdate(item.like_state, item.frameId)}>
-            
-          {/* 아이콘 수정해야함 */}
+        
           <Image
-          source={item.like_state ? icons.checkmark : icons.cameraButton}
+          // source={item.like_state ? icons.checkmark : icons.cameraButton}
+          source={item.like_state ? icons.star : icons.outlineStar}
           resizeMode="contain"
           style={{
             width: 20,
             height: 20,
           }}
           />
-
             </TouchableOpacity>
-          
+            {/* 프레임 이름 텍스트 */}
           <View>
             <Text
             style={{
@@ -198,7 +196,6 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
             }
             > {`${item.frameName}`} </Text>
           </View>
-
         </View>
       )
       
@@ -241,6 +238,7 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
             }}
             
         > 
+        {/* 카테고리 버튼 */}
       <Text
         style={{backgroundColor:'#FFCACA', 
         textAlign: 'center',
@@ -248,12 +246,9 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
         borderRadius:5,
         width:65,
         height:23,
-        color: COLORS.white == item.id ? COLORS.primary : COLORS.black,
+        color: COLORS.white == item.id ? COLORS.primary : '#000000',
         ...FONTS.h3
       }}
-        // color: COLORS.white == item.id ? COLORS.primary : COLORS.black,
-        //   ...FONTS.h3
-        // }}
         onPress={()=>setSelectedCategory(item.category)}
         >
         {item.name}
@@ -270,14 +265,6 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
       transparent={true}
       visible={isVisible}
       >
-
-      {/* <View>
-      <Button
-        title="Press me"
-        onPress={() => Alert.alert('Simple Button pressed')}
-      />
-        </View> */}
-
         <View
           style={{
             flex: 1
@@ -295,6 +282,8 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
                   }}
                 />
             </TouchableWithoutFeedback>
+
+          {/* 프레임 선택창 전체모달 */}
             <Animated.View
               style={{
                 position: 'absolute',
@@ -304,7 +293,6 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
                 height: "100%",
                 padding: SIZES.padding,
                 backgroundColor: '#251B37'
-                // backgroundColor: '#4B4B4B'
               }}>
           <View>
             {renderFilterOption()}
