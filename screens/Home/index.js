@@ -10,7 +10,8 @@ import {
   Platform,
   PermissionsAndroid,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  flexDirection
 } from 'react-native';
 
 import {Camera, useCameraDevices} from "react-native-vision-camera";
@@ -195,12 +196,11 @@ const frameCloseNnull = () => {
       <View
        style={{
         flexDirection:'row',
-      
         paddingTop: SIZES.padding * 2,
         paddingBottom: SIZES.radius,
         paddingHorizontal: SIZES.padding,
         alignItems: 'center',
-        backgroundColor: COLORS.light,
+        backgroundColor: '#251B37',
         zIndex: 1
       }}
       >
@@ -275,30 +275,31 @@ const frameCloseNnull = () => {
 
   function renderFooter() {
     return (
-      <View
-        style={{
+      <View style={{
           flexDirection: 'row',
+          justifyContent:'center',
           height: 90,
           paddingTop: SIZES.radius,
           paddingHorizontal: SIZES.radius,
-          backgroundColor: COLORS.light,
+          backgroundColor: '#251B37',
           zIndex: 1}}
           >
-
       <IconButton
       icon={icons.scan}
       iconStyle={{
-        width: 40,
-        height: 40
+        paddingHorizontal:50,
+        width: 60,
+        height: 60,
       }}
       onPress={()=>setShowGalleryModal(true)}
       />
 
      <IconButton
-      icon={icons.cameraButton}
+      icon={icons.cam}
       iconStyle={{ 
-        width: 40,
-        height: 40
+        paddingHorizontal:50,
+        width: 60,
+        height: 60,
       }}
       onPress={()=>capturePhoto()}
       />
@@ -306,8 +307,9 @@ const frameCloseNnull = () => {
     <IconButton
       icon={icons.person2}
       iconStyle={{
-        width: 40,
-        height: 40
+        paddingHorizontal:50,
+        width: 60,
+        height: 60,
       }}
       onPress={()=> setShowFilterModal(true)}
       />
