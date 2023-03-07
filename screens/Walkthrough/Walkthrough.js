@@ -3,7 +3,7 @@ import React from 'react';
 import {
     View,
     Text,
-    Animated
+    Animated,
 } from 'react-native';
 
 import { TextButton } from "../../components"; 
@@ -12,70 +12,58 @@ import Walkthrough1 from './Walkthrough1';
 import {useRoute} from "@react-navigation/native";
 
 import ImageCropPicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 
 
 const Walkthrough = ({route, navigation}) => {
 
         const [images, setImages] = React.useState([]);
         const [chooseState, setChoosestate] = React.useState(false);
-
-        const openImagePicker = () => {
-            let imageList = [];
-
-            ImageCropPicker.openPicker({
-                multiple: true,
-                waitAnimationEnd: false,
-                includeExif: true,
-                forceJpg: true,
-                compressImageQuality: 0.8,
-                minFiles: 10,
-                maxFiles: 20,
-                mediaType: 'photo',
-                includeBase64: true,
-            })
-            .then(response => {
-                // console.log('Response: ', response);
-                response.map(image => {
-                    imageList.push({
-                        filename: image.filename,
-                        path: image.path,
-                        data: image.data,
-                    });
-                    setImages(imageList);
-                })
-            .then(setChoosestate(true))
-            .then(sendImages(imageList))
-            .catch(e => console.log('Error ', e.message));
-            })
-
-        }
-    
-    //이미지 리스트 api연결 중
-    const sendImages = (images) => {
-        const testList = [];
-        const test = () => {
-            
-            for (let i =0; i<images.length; i++) {
-            console.log("test message")
-            // fetch(``,{method: "POST"})
-            // .then((res)=>res.json())
-            testList.push(images[i].filename);
-            }
-            return testList;
-        }
-
+        const BaseUrl = "http://52.79.250.39:8080";
+        const [data, setData] = React.useState([]);
         
-        test();
-        return (
-            console.log(testList)
-        )
-    }
+        //토큰 전달 완료
+         const {token} = route.params;
+
+        const openImagePicker = async () => {
+            const testList = [];
+
+            ImagePicker.openPicker({
+                multiple: true
+            })
+            .then(image => {
+            for(let i=0 ; i < image.length ; i++) {
+            console.log("selected Image", image[i])
+            // imageUpload(image[i].path)
+
+            const imageData = new FormData()
+
+            imageData.append("file", {
+                uri: image[i].path,
+                name: 'image.png',
+                fileName: 'image',
+                type: 'image/png'
+            })
+
+            fetch(`${BaseUrl}/frame/test`, {
+                method: "POST",
+                body: imageData,
+            })
+            // .then(console.log('response loaded'))
+            .then((res) => console.log(res))
+            .then((res) => setData(res))
+            .then(testList.push(data))
+            // .then(console.log(testList))
+            .then(console.log(testList))
+            .catch(err => console.log(err))
+        }
+        })
+        
+        }
+        
 
     //API정보 이용 시
     const [userName, setUserName] = React.useState("");
-
-    //토큰 전달 완료
-    const {token} = route.params;
 
     //User정보 호출 완료
     const userNameInfo = () => {
@@ -206,10 +194,10 @@ const Walkthrough = ({route, navigation}) => {
                 backgroundColor: COLORS.light
             }}
         >
-            {/* {chooseState ?
+            {chooseState ?
             <Text>{userName}님의 데이터를 분석중입니다.</Text> 
               : <Text> {userName}님 반갑습니다! </Text> 
-          } */}
+          }
             
             <Animated.FlatList
                 data={constants.walkthrough}
