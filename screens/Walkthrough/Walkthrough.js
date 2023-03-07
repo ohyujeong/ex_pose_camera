@@ -85,33 +85,36 @@ const styles = StyleSheet.create({
 
 const Walkthrough = ({route, navigation}) => {
     const [chooseState, setChoosestate] = React.useState(false);
-
+    const BaseUrl = "http://52.79.250.39:8080";
 
     const openImagePicker = () => {
-        ImageCropPicker.openPicker({
+       ImageCropPicker.openPicker({
             multiple: true,
         })
         .then(image => {
-            console.log("selected image", image)
+            console.log("selected image", image[0])
+            console.log(image.length)
+            return image
         })
-        .then(image => {
 
-            for (let i =0; i< image.length ; i++) {
+        .then ( image => {
+        for (let i =0; i < image.length ; i++) {
                 const imageData = new FormData()
 
                 imageData.append("file", {
-                    uri: image[0].path,
+                    uri: image[i].path,
                     name: 'image.png',
                     fileName: 'image',
                     type: 'image/png'
                 })
+
                 fetch(`${BaseUrl}/frame/test`, {
                     method: 'POST',
                     body: imageData
                 })
                 .then((res) => console.log(res))
             }
-             }
+        }
         )
     }
 
@@ -250,7 +253,7 @@ const Walkthrough = ({route, navigation}) => {
                 backgroundColor: COLORS.light
             }}
         >
-            {chooseStae ? <Text style={styles.userTxt}>
+            {chooseState ? <Text style={styles.userTxt}>
                 {userName}님 의 데이터를 분석중입니다.
             </Text> : 
             <Text style={styles.userTxt}>
