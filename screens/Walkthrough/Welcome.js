@@ -1,23 +1,52 @@
 import React from 'react';
-import {
-    View,
-    Text,
-    Image,
-    Linking
-} from 'react-native';
+import { StyleSheet, View, Text, Image, Linking } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { TextButton } from "../../components";
+import { IconButton, TextButton } from "../../components";
 import { COLORS, FONTS, SIZES, images } from '../../constants';
+
+const styles = StyleSheet.create({
+    bg: {
+        flex: 1,
+        backgroundColor: COLORS.bgMain,
+        color: 'blue',
+        fontWeight: 'bold',
+        fontSize: 30,
+    },
+    appName: {
+        color: COLORS.txtMain,
+        fontSize: 64,
+        marginTop: 130,
+        fontFamily: 'HeirofLightOTFRegular'
+    },
+    subTxt: {
+        marginTop: 20,
+        fontSize: SIZES.h3,
+        color: COLORS.txtGrey,
+        fontFamily: 'HeirofLightOTFRegular'
+    },
+    nonMembers: {
+        color: COLORS.txtGrey,
+        textDecorationLine: 'underline',
+        fontFamily: 'HeirofLightOTFRegular',
+        backgroundColor: null
+    },
+    loginBtn: {
+        height: 50,
+        borderRadius: SIZES.radius,
+        backgroundColor: COLORS.bgMain
+    },
+    socialLoginBtn: {
+        width: 300, height: 80,
+        marginBottom: 30
+    }
+});
 
 const Welcome = ({ navigation }) => {
     
     return (
         <View
-            style={{
-                flex: 1,
-                backgroundColor: COLORS.light
-            }}
+            style={styles.bg}
         >
             {/* Logo & Title */}
             <View
@@ -27,19 +56,11 @@ const Welcome = ({ navigation }) => {
                     justifyContent: 'center'
                 }}
             >
-                <Image
-                    source={images.logo}
-                    style={{
-                        width: 150,
-                        height: 150
-                    }}
-                />
-
-                <Text style={{ marginTop: SIZES.padding, ...FONTS.h1 }}>
-                    새로운 내 모습을 담다
-                </Text>
-                <Text style={{ marginTop: SIZES.base, ...FONTS.h1 }}>
+                <Text style={styles.appName}>
                     Ex.Pose
+                </Text>
+                <Text style={styles.subTxt}>
+                    새로운 내 모습을 담다
                 </Text>
             </View>
 
@@ -51,27 +72,17 @@ const Welcome = ({ navigation }) => {
                 }}
             >
             
-
-            {/*소셜로그인으로 이어지기*/}
-                <TextButton
-                    contentContainerStyle={{
-                        height: 50,
-                        borderRadius: SIZES.radius
-                    }}
-                    label="로그인하기"
+                {/*소셜로그인으로 이어지기*/}
+                <IconButton
+                    icon={images.kakao_login_large_wide}
+                    iconStyle={styles.socialLoginBtn}
                     onPress={() => navigation.navigate("Login")}
                 />
 
                 <TextButton
-                    contentContainerStyle={{
-                        height: 50,
-                        marginTop: SIZES.base,
-                        backgroundColor: null
-                    }}
+                    contentContainerStyle={styles.nonMembers}
                     label="비회원으로 시작하기"
-                    labelStyle={{
-                        color: COLORS.primary
-                    }}
+                    labelStyle={styles.nonMembers}
                     onPress={() => navigation.navigate("Home")}
                 />
             </View>

@@ -119,7 +119,7 @@ const Walkthrough = ({route, navigation}) => {
     }
 
     //API정보 이용 시
-    const [userName, setUserName] = React.useState("");
+    const [userName, setUserName] = React.useState("Ex.Pose");
 
     // //토큰 전달 완료
     const {token} = route.params;
@@ -164,7 +164,7 @@ const Walkthrough = ({route, navigation}) => {
                     constants.walkthrough.map((item, index) => {
                         const dotColor = dotPostition.interpolate({
                             inputRange: [index -1, index, index+1],
-                            outputRange: [COLORS.dark08, COLORS.primary, COLORS.dark08],
+                            outputRange: [COLORS.txtGrey, COLORS.txtMain, COLORS.txtGrey],
                             extrapolate: "clamp"
                         })
 
@@ -189,17 +189,7 @@ const Walkthrough = ({route, navigation}) => {
     function renderFooter() {
         return (
             <View
-                style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: SIZES.height * 0.2,
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    paddingHorizontal: SIZES.padding,
-                    paddingVertical: SIZES.height > 700 ? SIZES.padding : 20
-                }}
+                style={styles.footer}
                 >
 
                 <Dots />
@@ -213,15 +203,8 @@ const Walkthrough = ({route, navigation}) => {
                 }}>
                     <TextButton
                         label="추천없이 사용"
-                        contentContainerStyle={{
-                            flex: 1,
-                            borderRadius: SIZES.radius,
-                            backgroundColor: COLORS.lightGrey
-                        }}
-                        labelStyle={{
-                            color: COLORS.primary,
-                            ...FONTS.h3
-                        }}
+                        contentContainerStyle={styles.footerBtn1Container}
+                        labelStyle={styles.footerBtn1Txt}
                         onPress={() => {
                             navigation.navigate("Home", {token: token})
                     }}
@@ -229,15 +212,8 @@ const Walkthrough = ({route, navigation}) => {
                     
                     <TextButton
                         label="포즈 추천받기" 
-                        contentContainerStyle={{
-                            flex: 1,
-                            marginleft: SIZES.radius,
-                            borderRadius: SIZES.radius,
-                            backgroundColor: COLORS.primary
-                        }}
-                        labelStyle={{
-                            ...FONTS.h3
-                        }}
+                        contentContainerStyle={styles.footerBtn2Container}
+                        labelStyle={styles.footerBtn2Txt}
                         onPress= {openImagePicker}
                     />
                     </View>
@@ -248,10 +224,7 @@ const Walkthrough = ({route, navigation}) => {
     return (
        
         <View
-            style={{
-                flex: 1,
-                backgroundColor: COLORS.light
-            }}
+            style={styles.bg}
         >
             {chooseState ? <Text style={styles.userTxt}>
                 {userName}님 의 데이터를 분석중입니다.
@@ -304,20 +277,13 @@ const Walkthrough = ({route, navigation}) => {
                                 }}
                             >
                                 <Text
-                                    style={{
-                                        ...FONTS.h1
-                                    }}
+                                    style={styles.txt1}
                                     >
                                     {item.title}
                                 </Text>
 
                                 <Text
-                                    style={{
-                                        marginTop: SIZES.radius,
-                                        textAlign: 'center',
-                                        ...FONTS.body3,
-                                        color: COLORS.grey
-                                    }}
+                                    style={styles.txt2}
                                 >
                                     {item.sub_title}        
                                 </Text>
