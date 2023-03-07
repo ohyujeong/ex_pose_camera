@@ -1,7 +1,6 @@
 import { correctBorderRadius } from 'framer-motion/types/render/dom/projection/scale-correction';
 import React from 'react';
 import {
-    StyleSheet,
     View,
     Text,
     Animated
@@ -12,83 +11,73 @@ import { COLORS, SIZES, constants, FONTS } from "../../constants";
 import Walkthrough1 from './Walkthrough1';
 import {useRoute} from "@react-navigation/native";
 
-const styles = StyleSheet.create({
-    bg: {
-        flex: 1,
-        backgroundColor: COLORS.bgMain,
-        color: 'blue',
-        fontWeight: 'bold',
-        fontSize: 30,
-    },
-    userTxt: {
-        fontFamily: 'HeirofLightOTFBold',
-        color: COLORS.txtMain,
-        fontSize: SIZES.h2,
-        textAlign: 'center',
-        marginTop: 80
-    },
-    footer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: SIZES.height * 0.2,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: SIZES.padding,
-        paddingVertical: SIZES.height > 700 ? SIZES.padding : 20
-    },
-    footerBtn1Container: {
-        flex: 1,
-        borderRadius: SIZES.radius,
-        backgroundColor: COLORS.lightGrey,
-        marginHorizontal: 10
-    },
-    footerBtn2Container: {
-        flex: 1,
-        marginleft: SIZES.radius,
-        borderRadius: SIZES.radius,
-        backgroundColor: COLORS.txtMain,
-        marginHorizontal: 10
-    },
-    footerBtn1Txt: {
-        fontFamily: 'HeirofLightOTFRegular',
-        fontSize: SIZES.h3,
-        color: COLORS.txtGrey,
-        // ...FONTS.h3
-    },
-    footerBtn2Txt: {
-        fontFamily: 'HeirofLightOTFRegular',
-        fontSize: SIZES.h3,
-        color: COLORS.bgMain,
-        // ...FONTS.h3
-    },
-    txt1: {
-        fontFamily: 'HeirofLightOTFBold',
-        fontSize: SIZES.h1,
-        // ...FONTS.h1,
-        color: COLORS.txtMain
-    },
-    txt2: {
-        fontFamily: 'HeirofLightOTFBold',
-        fontSize: SIZES.body3,
-        marginTop: SIZES.radius,
-        textAlign: 'center',
-        // ...FONTS.body3,
-        color: COLORS.txtGrey
-    }
-    
-});
+import ImageCropPicker from 'react-native-image-crop-picker';
 
 
 const Walkthrough = ({route, navigation}) => {
-    //API정보 이용 시
-    const [userName, setUserName] = React.useState("Ex.Pose");
 
-    // //토큰 전달 완료
+        const [images, setImages] = React.useState([]);
+        const [chooseState, setChoosestate] = React.useState(false);
+
+        const openImagePicker = () => {
+            let imageList = [];
+
+            ImageCropPicker.openPicker({
+                multiple: true,
+                waitAnimationEnd: false,
+                includeExif: true,
+                forceJpg: true,
+                compressImageQuality: 0.8,
+                minFiles: 10,
+                maxFiles: 20,
+                mediaType: 'photo',
+                includeBase64: true,
+            })
+            .then(response => {
+                // console.log('Response: ', response);
+                response.map(image => {
+                    imageList.push({
+                        filename: image.filename,
+                        path: image.path,
+                        data: image.data,
+                    });
+                    setImages(imageList);
+                })
+            .then(setChoosestate(true))
+            .then(sendImages(imageList))
+            .catch(e => console.log('Error ', e.message));
+            })
+
+        }
+    
+    //이미지 리스트 api연결 중
+    const sendImages = (images) => {
+        const testList = [];
+        const test = () => {
+            
+            for (let i =0; i<images.length; i++) {
+            console.log("test message")
+            // fetch(``,{method: "POST"})
+            // .then((res)=>res.json())
+            testList.push(images[i].filename);
+            }
+            return testList;
+        }
+
+        
+        test();
+        return (
+            console.log(testList)
+        )
+    }
+
+    //API정보 이용 시
+    const [userName, setUserName] = React.useState("");
+
+    //토큰 전달 완료
     const {token} = route.params;
 
-    // //User정보 호출 완료
+    //User정보 호출 완료
     const userNameInfo = () => {
 
         const BaseUrl = "http://52.79.250.39:8080";
@@ -128,7 +117,7 @@ const Walkthrough = ({route, navigation}) => {
                     constants.walkthrough.map((item, index) => {
                         const dotColor = dotPostition.interpolate({
                             inputRange: [index -1, index, index+1],
-                            outputRange: [COLORS.txtGrey, COLORS.txtMain, COLORS.txtGrey],
+                            outputRange: [COLORS.dark08, COLORS.primary, COLORS.dark08],
                             extrapolate: "clamp"
                         })
 
@@ -153,46 +142,75 @@ const Walkthrough = ({route, navigation}) => {
     function renderFooter() {
         return (
             <View
-                style={styles.footer}
+                style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: SIZES.height * 0.2,
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: SIZES.padding,
+                    paddingVertical: SIZES.height > 700 ? SIZES.padding : 20
+                }}
                 >
 
                 <Dots />
 
                 {/*Buttons*/}
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        height: 55
-                    }}
-                >
+                {chooseState ? <View></View> :   
+                   <View
+                   style={{
+                    flexDirection: 'row',
+                    height: 55
+                }}>
                     <TextButton
                         label="추천없이 사용"
-                        contentContainerStyle={styles.footerBtn1Container}
-                        labelStyle={styles.footerBtn1Txt}
+                        contentContainerStyle={{
+                            flex: 1,
+                            borderRadius: SIZES.radius,
+                            backgroundColor: COLORS.lightGrey
+                        }}
+                        labelStyle={{
+                            color: COLORS.primary,
+                            ...FONTS.h3
+                        }}
                         onPress={() => {
-                            navigation.navigate("Home")
-                            // navigation.navigate("Home", {token: token})
+                            navigation.navigate("Home", {token: token})
                     }}
                     />
-                    {/*원래 로그인 이었던 것*/}
+                    
                     <TextButton
                         label="포즈 추천받기" 
-                        contentContainerStyle={styles.footerBtn2Container}
-                        labelStyle={styles.footerBtn2Txt}
+                        contentContainerStyle={{
+                            flex: 1,
+                            marginleft: SIZES.radius,
+                            borderRadius: SIZES.radius,
+                            backgroundColor: COLORS.primary
+                        }}
+                        labelStyle={{
+                            ...FONTS.h3
+                        }}
+                        onPress= {openImagePicker}
                     />
-
-                </View>
+                    </View>
+                }
             </View>
         )
     }
     return (
        
         <View
-            style={styles.bg}
+            style={{
+                flex: 1,
+                backgroundColor: COLORS.light
+            }}
         >
-            <Text style={styles.userTxt}>
-                {userName}님 반갑습니다!
-            </Text>
+            {/* {chooseState ?
+            <Text>{userName}님의 데이터를 분석중입니다.</Text> 
+              : <Text> {userName}님 반갑습니다! </Text> 
+          } */}
+            
             <Animated.FlatList
                 data={constants.walkthrough}
                 keyExtractor={(item) => item.id}
@@ -237,13 +255,20 @@ const Walkthrough = ({route, navigation}) => {
                                 }}
                             >
                                 <Text
-                                    style={styles.txt1}
+                                    style={{
+                                        ...FONTS.h1
+                                    }}
                                     >
                                     {item.title}
                                 </Text>
 
                                 <Text
-                                    style={styles.txt2}
+                                    style={{
+                                        marginTop: SIZES.radius,
+                                        textAlign: 'center',
+                                        ...FONTS.body3,
+                                        color: COLORS.grey
+                                    }}
                                 >
                                     {item.sub_title}        
                                 </Text>
