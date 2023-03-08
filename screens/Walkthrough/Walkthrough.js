@@ -86,10 +86,11 @@ const styles = StyleSheet.create({
 const Walkthrough = ({route, navigation}) => {
     const [chooseState, setChoosestate] = React.useState(false);
     const BaseUrl = "http://52.79.250.39:8080";
-    const testList = [];
+    
     
     const openImagePicker = () => {
-
+        const testList = [];
+        
        ImageCropPicker.openPicker({
             multiple: true,
         })

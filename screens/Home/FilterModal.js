@@ -175,15 +175,18 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
           />
           </TouchableOpacity>
           
-          <TouchableOpacity
-          style={{
-            position: 'absolute',
-            top: '15%',
-            left: 7,
-          }}
-          onPress={()=> likeUpdate(item.like_state, item.frameId)}>
+          
         
-        <Image
+        {selectedCategory === 'rec' ? null :
+        <TouchableOpacity
+        style={{
+          position: 'absolute',
+          top: '15%',
+          left: 7,
+        }}
+        onPress={()=> likeUpdate(item.like_state, item.frameId)}>
+          
+          <Image
           source={item.like_state ? icons.star : icons.outlineStar}
           resizeMode="contain"
           style={{
@@ -191,9 +194,8 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
             height: 20,
           }}
           />
-          
-          
             </TouchableOpacity>
+    }
             {/* 프레임 이름 텍스트 */}
           <View>
             <Text
