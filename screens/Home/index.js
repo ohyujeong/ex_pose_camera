@@ -63,8 +63,6 @@ const Home = ({ route, navigation }) => {
 
   //플래시, 전환 hook
   // const [flash, setFlash] = React.useState<'off' | 'on'>('off');
-  // const [cameraPosition, setCameraPosition] = React.useState<'front' | 'back'>('back');
-  // const supportsCameraFlipping = React.useMemo(() => devices.back != null && devices.front != null, [devices.back, devices.front]);
   // const supportsFlash = device?.hasFlash ?? false;
   // const {savingState, setSavingState} = React.useState<'none' | 'saving' | 'saved'>('none');
 
@@ -78,14 +76,11 @@ const Home = ({ route, navigation }) => {
   const [showGalleryModal, setShowGalleryModal] = React.useState(false)
   const [showFrameModal, setShowFrameModal] = React.useState(false)
   const [selectedFrameId, setSelectedFrameId] = React.useState('')
-  // const [frameUrl, setFrameUrl] = React.useState('')
-
 
   const loadFrameModal = (selectedFrameId) => {
       setSelectedFrameId(selectedFrameId)
       console.log(selectedFrameId)
        setShowFrameModal(true)
-      //  setShowFilterModal(false)
   }
 
   //Permissions
@@ -120,9 +115,6 @@ const Home = ({ route, navigation }) => {
   },[]); 
 
   //카메라 플래시, 전환 기능
-  // const onFlipCameraPressed = React.useCallback(() => {
-  //   setCameraPosition((p) => (p === 'back' ? 'front' : 'back'));
-  // }, []);
   // const onFlashPressed = React.useCallback(() => {
   //   setFlash((f) => (f === 'off' ? 'on' : 'off'));
   // }, []);

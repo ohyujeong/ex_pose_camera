@@ -110,12 +110,14 @@ const Walkthrough = ({route, navigation}) => {
 
                 console.log(imageData)
 
-                fetch(`${BaseUrl}/frame/test`, {
+                fetch('http://c539-34-124-166-18.ngrok.io', {
                     method: 'POST',
                     body: imageData
                 })
+                .then(response => response.json())
                 .then((res) => console.log(res))
                 .then((res) => testList.push(res))
+                .then(console.log(testList))
             }
         } 
         )

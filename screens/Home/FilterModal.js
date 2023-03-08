@@ -120,7 +120,6 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
         })
         .then((res) => res.json())
         .then((resJson)=>{setData(resJson.data)})
-        .then(console.log(selectedCategory))
         .catch(console.error)
         .finally(() => setIsLoading(false));
       }
