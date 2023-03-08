@@ -20,6 +20,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { FrameModal } from "..";
+import { ScreenStackHeaderLeftView } from 'react-native-screens';
 
 // 토큰 받기 token, loadFrameModal 사용해서 selectedFrameId넘김
 const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => {
@@ -33,19 +34,14 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
   const [isLoading, setIsLoading] = React.useState(false);
   //selected 시도중
   const [selectedCategory, setSelectedCategory] = React.useState('half');
-  //const selectedframeList = React.useState(null);
 
-  const [showFrameModal, setShowFrameModal] = React.useState('');
-
-  // const [likeState, setLikeState] = React.useState('');
+  const [active, setActive] = React.useState(false);
+  const handleClick = () => {
+    setActive(!active);
+  }
 
   // 토큰 전달 확인
   // console.log(`filter ${token}`)
-
-  // useEffect(()=> {
-  // frameList(selectedCategory)
-  // },[selectedCategory])
-  //여기까지
 
   useEffect(()=> {
     if(showFilterModal) {
@@ -71,9 +67,13 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
   const frameList = (category) => {
     
      useEffect(() => {
-      setIsLoading(true);
       getAllFrames(category);
     },[selectedCategory]);
+
+    useEffect(() => {
+      getAllFrames(category);
+    },[active]);
+
 
     const getAllFrames = (selectedCategory) => {
 
@@ -111,20 +111,23 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
       }
 
       else {
-        fetch(`${categoryUrl}${selectedCategory}`)
+        fetch(`${categoryUrl}${selectedCategory}`,{
+          method : "GET",
+          headers : {
+              Authorization : `Bearer ${token}`
+          }
+        })
         .then((res) => res.json())
         .then((resJson)=>{setData(resJson.data)})
         .catch(console.error)
         .finally(() => setIsLoading(false));
       }
-
     }
 
     const renderCategory = ({item}) => {
 
       const userLikeState = `${BaseUrl}/frame/like?frameId=`
       const userUnlikeState = `${BaseUrl}/frame/like/cancel?frameId=`
-
 
       const likeUpdate = (likeState, frameId) => {
       // console.log(likeState)
@@ -138,6 +141,8 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
               Authorization : `Bearer ${token}`
           }
           })
+        .then(handleClick)
+        // .then(console.log(active))
       // .then (console.log("like to unlike"))
        .catch(console.error)
        }
@@ -151,6 +156,8 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
           }
           })
        // .then (console.log("unlike to like"))
+       .then(handleClick)
+      //  .then(console.log(active))
       .catch(console.error)
        }
       }
@@ -175,8 +182,7 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
           }}
           onPress={()=> likeUpdate(item.like_state, item.frameId)}>
         
-          <Image
-          // source={item.like_state ? icons.checkmark : icons.cameraButton}
+        <Image
           source={item.like_state ? icons.star : icons.outlineStar}
           resizeMode="contain"
           style={{
@@ -184,6 +190,8 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
             height: 20,
           }}
           />
+          
+          
             </TouchableOpacity>
             {/* 프레임 이름 텍스트 */}
           <View>

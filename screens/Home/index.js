@@ -172,18 +172,6 @@ else {
 
 }, [imageSource]);
 
-//사진찍고 사용된 프레임 정보 전달까지
-// const saveAndUpdate = () => {
-//   onSavePressed();
-//   fetch(`${BaseUrl}/frame/use?frameId=${selectedFrameId}`,{
-//     method : "PATCH",
-//     headers : {
-//         Authorization : `Bearer ${token}`
-//     }
-//     })
-//  .catch(console.error)
-// }
-
 const frameCloseNnull = () => {
   setShowFrameModal(false);
   return (

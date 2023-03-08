@@ -41,7 +41,7 @@ React.useEffect(()=> {
   ) 
   .catch(console.error)
   // .finally(() => setIsLoading(false));
-},[])
+},[selectedFrameId])
 
   
 

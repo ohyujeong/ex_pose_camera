@@ -86,17 +86,16 @@ const styles = StyleSheet.create({
 const Walkthrough = ({route, navigation}) => {
     const [chooseState, setChoosestate] = React.useState(false);
     const BaseUrl = "http://52.79.250.39:8080";
-
+    const testList = [];
     const openImagePicker = () => {
+
        ImageCropPicker.openPicker({
             multiple: true,
         })
         .then(image => {
-            console.log("selected image", image[0])
-            console.log(image.length)
+            console.log("selected image", image)
             return image
         })
-
         .then ( image => {
         for (let i =0; i < image.length ; i++) {
                 const imageData = new FormData()
@@ -108,13 +107,16 @@ const Walkthrough = ({route, navigation}) => {
                     type: 'image/png'
                 })
 
+                console.log(imageData)
+
                 fetch(`${BaseUrl}/frame/test`, {
                     method: 'POST',
                     body: imageData
                 })
                 .then((res) => console.log(res))
+                .then((res) => testList.push(res))
             }
-        }
+        } 
         )
     }
 
