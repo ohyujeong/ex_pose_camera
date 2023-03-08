@@ -59,6 +59,8 @@ const Home = ({ route, navigation }) => {
   const [showCamera, setShowCamera] = React.useState(false);
   const [imageSource, setImageSource] = React.useState('file://','');
 
+  const [camView, setCamView] = React.useState('back');
+
   //플래시, 전환 hook
   // const [flash, setFlash] = React.useState<'off' | 'on'>('off');
   // const [cameraPosition, setCameraPosition] = React.useState<'front' | 'back'>('back');
@@ -67,7 +69,7 @@ const Home = ({ route, navigation }) => {
   // const {savingState, setSavingState} = React.useState<'none' | 'saving' | 'saved'>('none');
 
   const devices = useCameraDevices();
-  const device = devices.back;
+  const device = camView === 'back' ? devices.back :devices.front;
   const [showFilterModal, setShowFilterModal] = React.useState(false)
   const {token} = route.params;
   //토큰 전달 확인
@@ -192,11 +194,18 @@ const frameCloseNnull = () => {
         zIndex: 1
       }}
       >
-        
+
     {/*close*/}
     <IconButton
       icon={icons.close}
       onPress={() => navigation.goBack()}
+      />
+
+    <IconButton
+      icon={icons.cameraFlipIcon}
+      onPress={()=> {
+        camView === 'back' ? setCamView('front') : setCamView('back')
+      }}
       />
 
     {/* {supportsFlash && (
@@ -204,7 +213,6 @@ const frameCloseNnull = () => {
             <IonIcon name={flash === 'on' ? 'flash' : 'flash-off'} color="black" size={24} />
           </PressableOpacity>
         )}
-
     {supportsCameraFlipping && (
           <PressableOpacity style={styles.button} onPress={onFlipCameraPressed} disabledOpacity={0.4}>
             <IonIcon name="camera-reverse" color="black" size={24} />
