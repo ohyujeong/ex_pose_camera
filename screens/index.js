@@ -12,6 +12,8 @@ import GalleryModal from "./Home/GalleryModal"
 
 import FrameModal from "./Home/FrameModal";
 
+import Banner from "./Walkthrough/Banner";
+
 export {
     Welcome,
     Walkthrough,
@@ -23,6 +25,7 @@ export {
     Login,
     GalleryModal,
     FrameModal,
+    Banner
 }
 
 {/*안에 있어야되는건데 일단 빼옴 AuthMain,*/}

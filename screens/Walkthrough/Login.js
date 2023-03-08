@@ -30,7 +30,9 @@ class Login extends React.Component {
  }
 
     handleWebViewNavigationStateChange = (newNavState, props) => {
-
+    this.props.navigation.navigate('Banner');
+    this.webview.stopLoading();
+    
     const {url} = newNavState;
     var split = url.split("code=");
     const code = split[1];
@@ -40,7 +42,6 @@ class Login extends React.Component {
     const REDIRECT_URI =  `${BaseUrl}/oauth/callback/kakao`;
 
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-    const userInfoApi = `${BaseUrl}/user/me`;
 
     if(url.includes('code=')){
       // 확인용 코드, 잘 되는거 확인함
@@ -48,7 +49,6 @@ class Login extends React.Component {
       // console.log(code);
 
       //전체 데이터 확인 및 access token 저장용 2/11 토큰 불러내기 성공
-      
       fetch(`${KAKAO_AUTH_URL}`)
       .then((res) => res.json())
       .then(res => {
@@ -57,11 +57,12 @@ class Login extends React.Component {
       console.log(token)
       //2/13 토큰 전달 완료
       this.props.navigation.navigate('Walkthrough', {token: token});
+      // this.props.navigation.reset({routes: [{name:'Walkthrough', params: {token}}]});
       })
       .catch(console.error)
 
       //webview 안나오게 하는거 위치 옮겨봤는데도 차이 없음, 다른 방법 알아봐야함
-      this.webview.stopLoading();
+      // this.webview.stopLoading();
       // this.props.navigation.navigate('Walkthrough');
     }
   }

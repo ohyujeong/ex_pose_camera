@@ -7,7 +7,9 @@ import {
     Walkthrough,
     
     Home,
-    Login
+    Login,
+
+    Banner
 } from "./screens";
 {/*8번줄 AuthMain,*/}
 const Stack = createStackNavigator();
@@ -29,6 +31,7 @@ const App = () => {
 
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Banner" component={Banner} />
             </Stack.Navigator>
         </NavigationContainer>
     )
