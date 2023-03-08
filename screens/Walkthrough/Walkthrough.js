@@ -86,18 +86,36 @@ const styles = StyleSheet.create({
 const Walkthrough = ({route, navigation}) => {
     const [chooseState, setChoosestate] = React.useState(false);
     const BaseUrl = "http://52.79.250.39:8080";
-    
+
+    const [half, setHalf] = React.useState (0);
+    const [many, setMany] = React.useState (0);
+    const [selfie, setSelfie] = React.useState (0);
+    const [sit, setSit] = React.useState (0);
+    const [two, setTwo] = React.useState (0);
+    const [whole, setWhole] = React.useState (0);
+
+    const resultList = {
+        half: half, 
+        many: many, 
+        selfie: selfie, 
+        sit: sit,
+        two: two,
+        whole: whole};
+
+    const json = JSON.stringify(resultList);
     
     const openImagePicker = () => {
-        const testList = [];
-        
+
+        // console.log (resultList)
+
        ImageCropPicker.openPicker({
             multiple: true,
         })
-        .then(image => {
-            console.log("selected image", image)
-            return image
-        })
+        .then(setChoosestate(true))
+        // .then(image => {
+        //     console.log("selected image", image)
+        //     return image
+        // })
         .then ( image => {
         for (let i =0; i < image.length ; i++) {
                 const imageData = new FormData()
@@ -109,20 +127,47 @@ const Walkthrough = ({route, navigation}) => {
                     type: 'image/png'
                 })
 
-                console.log(imageData)
+                // console.log(imageData)
 
-                fetch('http://c539-34-124-166-18.ngrok.io', {
+                fetch('http://546a-34-82-2-41.ngrok.io', {
                     method: 'POST',
                     body: imageData
                 })
                 .then(response => response.json())
-                .then((res) => console.log(res))
-                .then((res) => testList.push(res))
-                .then(console.log(testList))
+                .then(response => {
+                    if (response.class_name === 'half') setHalf(half+1)
+                    if (response.class_name === 'many') setMany(many+1)
+                    if (response.class_name === 'selfie') setSelfie(selfie+1)
+                    if (response.class_name === 'sit') setSit(sit+1)
+                    if (response.class_name === 'two') setTwo(two+1)
+                    if (response.class_name === 'whole') setWhole(whole+1)
+
+                    return resultList;
+                })
+                .then(sendResult(json))
+                // .then((res) => console.log(res.class_name))
+                // .then((resJson) => setResult(resJson.class_name))
+                // .then(console.log(resultList))
+                // .then((response) => upDateResult(response))
+
             }
         } 
         )
     }
+
+    const sendResult = (finalResult) => {
+        fetch(`${BaseUrl}/user/update`, {
+            method : "PATCH",
+            headers : {
+                Authorization : `Bearer ${token}`,
+                body: finalResult
+            }
+            }) 
+            .then((res) => res.json())
+            .then(res => console.log(res))
+            .catch(console.error)
+    }
+    console.log(json)
 
     //API정보 이용 시
     const [userName, setUserName] = React.useState("Ex.Pose");
@@ -133,7 +178,6 @@ const Walkthrough = ({route, navigation}) => {
     // //User정보 호출 완료
     const userNameInfo = () => {
 
-        const BaseUrl = "http://52.79.250.39:8080";
         const userInfoApi = `${BaseUrl}/user/me`;
 
         //사용자 데이터 fetch 정보 호출 완료
