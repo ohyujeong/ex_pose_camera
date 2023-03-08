@@ -35,6 +35,7 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
   //selected 시도중
   const [selectedCategory, setSelectedCategory] = React.useState('half');
 
+  //좋아요 클릭 시 reload 할 때
   const [active, setActive] = React.useState(false);
   const handleClick = () => {
     setActive(!active);
@@ -119,6 +120,7 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
         })
         .then((res) => res.json())
         .then((resJson)=>{setData(resJson.data)})
+        .then(console.log(selectedCategory))
         .catch(console.error)
         .finally(() => setIsLoading(false));
       }
@@ -254,8 +256,8 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
         borderRadius:5,
         width:65,
         height:23,
-        color: COLORS.white == item.id ? COLORS.primary : '#000000',
-        ...FONTS.h3
+        // color: COLORS.white == item.id ? COLORS.primary : '#000000',
+        // ...FONTS.h3
       }}
         onPress={()=>setSelectedCategory(item.category)}
         >

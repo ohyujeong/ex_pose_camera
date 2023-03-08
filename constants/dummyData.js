@@ -470,7 +470,7 @@ const FilterOption = [
     {
         id: 5,
         name: "전신",
-        categoty: "whole"
+        category: "whole"
     },
 
     {
