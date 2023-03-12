@@ -129,7 +129,7 @@ const Walkthrough = ({route, navigation}) => {
 
                 // console.log(imageData)
 
-                fetch('http://546a-34-82-2-41.ngrok.io', {
+                fetch('http://1b6c-34-90-102-151.ngrok.io', {
                     method: 'POST',
                     body: imageData
                 })
@@ -145,22 +145,18 @@ const Walkthrough = ({route, navigation}) => {
                     return resultList;
                 })
                 .then(sendResult(json))
-                // .then((res) => console.log(res.class_name))
-                // .then((resJson) => setResult(resJson.class_name))
-                // .then(console.log(resultList))
-                // .then((response) => upDateResult(response))
-
             }
         } 
         )
     }
 
     const sendResult = (finalResult) => {
+
         fetch(`${BaseUrl}/user/update`, {
             method : "PATCH",
+            body: finalResult,
             headers : {
                 Authorization : `Bearer ${token}`,
-                body: finalResult
             }
             }) 
             .then((res) => res.json())

@@ -1,12 +1,8 @@
 import React from 'react';
 import {
   View,
-  Text,
-  Image,
-  Linking
 } from 'react-native';
 import { WebView } from 'react-native-webview';
-import {useRoute} from "@react-navigation/native";
 
 class Login extends React.Component {
   
@@ -30,8 +26,6 @@ class Login extends React.Component {
  }
 
     handleWebViewNavigationStateChange = (newNavState, props) => {
-    this.props.navigation.navigate('Banner');
-    this.webview.stopLoading();
     
     const {url} = newNavState;
     var split = url.split("code=");
@@ -47,7 +41,8 @@ class Login extends React.Component {
       // 확인용 코드, 잘 되는거 확인함
       // console.log(url);
       // console.log(code);
-
+      this.webview.stopLoading();
+      this.props.navigation.navigate('Banner');
       //전체 데이터 확인 및 access token 저장용 2/11 토큰 불러내기 성공
       fetch(`${KAKAO_AUTH_URL}`)
       .then((res) => res.json())
