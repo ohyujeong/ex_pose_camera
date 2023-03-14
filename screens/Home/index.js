@@ -365,17 +365,17 @@ const frameCloseNnull = () => {
                   alignItems: 'center',
                   borderRadius: 10,
                   borderWidth: 2,
-                  borderColor: '#77c3ec',
+                  borderColor: '#251B37',
                 }}
                 onPress={() => setShowCamera(true)}>
-                <Text style={{color: '#77c3ec', fontWeight: '500'}}>
+                <Text style={{color: '#251B37', fontWeight: '500'}}>
                   재촬영
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={{
-                  backgroundColor: '#77c3ec',
+                  backgroundColor: '#251B37',
                   padding: 10,
                   justifyContent: 'center',
                   alignItems: 'center',
