@@ -6,19 +6,14 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Linking,
   Platform,
   PermissionsAndroid,
-  StyleSheet,
-  ScrollView,
-  flexDirection
+  StyleSheet
 } from 'react-native';
 
 import {Camera, useCameraDevices} from "react-native-vision-camera";
 
-import { 
-  IconButton,
-  TextButton } from "../../components";
+import { IconButton} from "../../components";
 
 import {
   COLORS,
@@ -35,15 +30,6 @@ import { FilterModal } from "..";
 import { GalleryModal } from "..";
 
 import { FrameModal } from "..";
-
-import Animated,{
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  set
-} from "react-native-reanimated";
-import { FlatList } from 'react-native-gesture-handler';
-import {useRoute} from "@react-navigation/native";
 
 // import RNFS from 'react-native-fs';
 // import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -352,7 +338,7 @@ const frameCloseNnull = () => {
             
         ) : null}
         
-        <View style={styles.backButton}>
+        {/* <View style={styles.backButton}>
             <TouchableOpacity
               style={{
                 backgroundColor: 'rgba(0,0,0,0.2)',
@@ -367,7 +353,7 @@ const frameCloseNnull = () => {
               onPress={() => setShowCamera(true)}>
               <Text style={{color: 'white', fontWeight: '500'}}>Back</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           <View style={styles.buttonContainer}>
           <View style={styles.buttons}>
@@ -383,7 +369,7 @@ const frameCloseNnull = () => {
                 }}
                 onPress={() => setShowCamera(true)}>
                 <Text style={{color: '#77c3ec', fontWeight: '500'}}>
-                  Retake
+                  재촬영
                 </Text>
               </TouchableOpacity>
 
@@ -399,7 +385,7 @@ const frameCloseNnull = () => {
                 }}
                 onPress={onSavePressed}>
                 <Text style={{color: 'white', fontWeight: '500'}}>
-                  Use Photo
+                  저장
                 </Text>
               </TouchableOpacity>
 

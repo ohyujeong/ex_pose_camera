@@ -1,4 +1,3 @@
-import { correctBorderRadius } from 'framer-motion/types/render/dom/projection/scale-correction';
 import React from 'react';
 import {
     View,
@@ -8,9 +7,8 @@ import {
 } from 'react-native';
 
 import { TextButton } from "../../components"; 
-import { COLORS, SIZES, constants, FONTS } from "../../constants";
+import { COLORS, SIZES, constants } from "../../constants";
 import Walkthrough1 from './Walkthrough1';
-import {useRoute} from "@react-navigation/native";
 
 import ImageCropPicker from 'react-native-image-crop-picker';
 
@@ -87,35 +85,77 @@ const Walkthrough = ({route, navigation}) => {
     const [chooseState, setChoosestate] = React.useState(false);
     const BaseUrl = "http://52.79.250.39:8080";
 
-    const [half, setHalf] = React.useState (0);
-    const [many, setMany] = React.useState (0);
-    const [selfie, setSelfie] = React.useState (0);
-    const [sit, setSit] = React.useState (0);
-    const [two, setTwo] = React.useState (0);
-    const [whole, setWhole] = React.useState (0);
+    var half = 0;
+    var many =0;
+    var selfie =0;
+    var sit=0;
+    var two=0;
+    var whole=0;
 
-    const resultList = {
-        half: half, 
-        many: many, 
-        selfie: selfie, 
-        sit: sit,
-        two: two,
-        whole: whole};
+    // const [half, setHalf] = React.useState(0);
+    // const [many, setMany] = React.useState(0);
+    // const [selfie, setSelfie] = React.useState(0);
+    // const [sit, setSit] = React.useState(0);
+    // const [two, setTwo] = React.useState(0);
+    // const [whole, setWhole] = React.useState(0);
+    //selfie가 나와도 업데이트가 안되고 있음
+    const increaseNumber = (result) => {
+        
+            switch(result){
+                case 'half' :
+                    half=half+1;
+                    // setHalf(half+1);
+                    console.log('update half: ' + half);
+                    break;
+                case 'many' :
+                    many=many+1;
+                    // setMany(many+1);
+                    console.log('update many: ' + many);
+                    break;
+                case 'selfie' :
+                    selfie=selfie+1;
+                    // setSelfie(selfie+1);
+                    console.log('update selfie: ' + selfie);
+                    break;
+                case 'sit' :
+                    sit=sit+1;
+                    // setSit(sit+1);
+                    console.log('update sit: ' + sit);
+                    break;
+                case 'two' :
+                    two=two+1;
+                    // setTwo(two+1);
+                    console.log('update two: ' + two);
+                    break;
+                case 'whole' :
+                    whole=whole+1;
+                    // setWhole(whole+1);
+                    console.log('update whole: ' + whole);
+                    break;
+                default :  null
+            }
 
-    const json = JSON.stringify(resultList);
+            // var resultList = {
+            //     half: half, 
+            //     many: many, 
+            //     selfie: selfie, 
+            //     sit: sit,
+            //     two: two,
+            //     whole: whole};
+    
+            // const json = JSON.stringify(resultList);
+
+            // return json;
+            }
+
     
     const openImagePicker = () => {
 
         // console.log (resultList)
-
        ImageCropPicker.openPicker({
             multiple: true,
         })
         .then(setChoosestate(true))
-        // .then(image => {
-        //     console.log("selected image", image)
-        //     return image
-        // })
         .then ( image => {
         for (let i =0; i < image.length ; i++) {
                 const imageData = new FormData()
@@ -129,32 +169,40 @@ const Walkthrough = ({route, navigation}) => {
 
                 // console.log(imageData)
 
-                fetch('http://1b6c-34-90-102-151.ngrok.io', {
+                fetch('http://9f7e-34-143-243-62.ngrok.io', {
                     method: 'POST',
                     body: imageData
                 })
                 .then(response => response.json())
                 .then(response => {
-                    if (response.class_name === 'half') setHalf(half+1)
-                    if (response.class_name === 'many') setMany(many+1)
-                    if (response.class_name === 'selfie') setSelfie(selfie+1)
-                    if (response.class_name === 'sit') setSit(sit+1)
-                    if (response.class_name === 'two') setTwo(two+1)
-                    if (response.class_name === 'whole') setWhole(whole+1)
-
-                    return resultList;
+                    // const result=response.class_name;
+                    // console.log(result);
+                    increaseNumber(response.class_name);
                 })
-                .then(sendResult(json))
             }
         } 
         )
+        //이거 나오게 하는 거 async로 라도 해보기
+        sendResult();
     }
 
-    const sendResult = (finalResult) => {
+    const sendResult = () => {
+
+        var resultList = {
+                half: half, 
+                many: many, 
+                selfie: selfie, 
+                sit: sit,
+                two: two,
+                whole: whole};
+    
+        const json = JSON.stringify(resultList);
+
+        console.log('send load' + json);
 
         fetch(`${BaseUrl}/user/update`, {
             method : "PATCH",
-            body: finalResult,
+            body: json,
             headers : {
                 Authorization : `Bearer ${token}`,
             }
@@ -163,7 +211,7 @@ const Walkthrough = ({route, navigation}) => {
             .then(res => console.log(res))
             .catch(console.error)
     }
-    console.log(json)
+    // console.log(json)
 
     //API정보 이용 시
     const [userName, setUserName] = React.useState("Ex.Pose");
