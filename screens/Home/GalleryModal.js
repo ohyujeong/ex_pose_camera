@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
-  Text,
   Animated,
   ScrollView,
-  TouchableWithoutFeedback,
   Modal,
   TouchableOpacity,
-  ActivityIndicator,
   Image
 } from 'react-native';
 
-import { COLORS, FONTS, SIZES, constants, icons, dummyData } from "../../constants";
-
-import { FlatList } from 'react-native-gesture-handler';
+import { SIZES, icons } from "../../constants";
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -176,7 +171,7 @@ const GalleryModal = ({ isVisible, onClose }) => {
                 width: "100%",
                 height: "100%",
                 padding: SIZES.padding,
-                backgroundColor: COLORS.grey
+                backgroundColor: '#251B37'
               }}>
           <View>
             {renderHeader()}

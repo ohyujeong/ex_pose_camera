@@ -3,7 +3,8 @@ import {
     View,
     Text,
     Animated,
-    StyleSheet
+    StyleSheet,
+    Alert
 } from 'react-native';
 
 import { TextButton } from "../../components"; 
@@ -149,10 +150,10 @@ const Walkthrough = ({route, navigation}) => {
             }
 
     
-    const openImagePicker = () => {
+    const openImagePicker = async () => {
 
         // console.log (resultList)
-       ImageCropPicker.openPicker({
+       await ImageCropPicker.openPicker({
             multiple: true,
         })
         .then(setChoosestate(true))
@@ -182,6 +183,7 @@ const Walkthrough = ({route, navigation}) => {
             }
         } 
         )
+
         //이거 나오게 하는 거 async로 라도 해보기
         sendResult();
     }
@@ -281,6 +283,14 @@ const Walkthrough = ({route, navigation}) => {
     }
 
     function renderFooter() {
+
+        const selectAlert = () => {
+            Alert.alert('사진을 분석합니다','취향 분석을 위해 좋아하는 인물 사진을 10장 이상 선택해 주세요.',
+                        [{text: '이해했어요', onPress: () => openImagePicker()}],
+                        {cancelable: true}
+                        )
+
+        }
         return (
             <View
                 style={styles.footer}
@@ -308,7 +318,7 @@ const Walkthrough = ({route, navigation}) => {
                         label="포즈 추천받기" 
                         contentContainerStyle={styles.footerBtn2Container}
                         labelStyle={styles.footerBtn2Txt}
-                        onPress= {openImagePicker}
+                        onPress= {selectAlert}
                     />
                     </View>
                 }
