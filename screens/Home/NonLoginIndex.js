@@ -120,7 +120,7 @@ const onSavePressed = React.useCallback(async () => {
       <View
        style={{
         flexDirection:'row',
-        paddingTop: SIZES.padding * 2,
+        paddingTop: SIZES.padding,
         paddingBottom: SIZES.radius,
         paddingHorizontal: SIZES.padding,
         alignItems: 'center',
