@@ -29,7 +29,8 @@ const GalleryModal = ({ isVisible, onClose }) => {
   function renderGallery() {
     
     const getPhotos = async () => {
-      const photos = await CameraRoll.getPhotos({
+      const photos = await CameraRoll.getPhotos
+      ({
         first: 10
       })
   
@@ -176,8 +177,6 @@ const GalleryModal = ({ isVisible, onClose }) => {
           <View>
             {renderHeader()}
             {renderGallery()}
-            {/* {renderFilterOption()}
-            {frameList(selectedFrameId)} */}
           </View>
             </Animated.View>
 

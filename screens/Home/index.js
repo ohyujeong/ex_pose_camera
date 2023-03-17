@@ -1,6 +1,5 @@
 import React from 'react';
 
-{/*part3영상내용 중 home+scanproduct*/}
 import {
   View,
   Text,
@@ -11,18 +10,13 @@ import {
   StyleSheet
 } from 'react-native';
 
-import {Camera, useCameraDevices} from "react-native-vision-camera";
+import {Camera, useCameraDevices } from "react-native-vision-camera";
 
 import { IconButton} from "../../components";
 
 import {
-  COLORS,
   SIZES,
-  FONTS,
-  icons,
-  constants,
-  images,
-  dummyData
+  icons
 } from "../../constants";
 
 import { FilterModal } from "..";
@@ -31,10 +25,6 @@ import { GalleryModal } from "..";
 
 import { FrameModal } from "..";
 
-// import RNFS from 'react-native-fs';
-// import IonIcon from 'react-native-vector-icons/Ionicons';
-// import { PressableOpacity } from 'react-native-pressable-opacity';
-// import { SAFE_AREA_PADDING } from './Constants';
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 
 const Home = ({ route, navigation }) => {
@@ -123,7 +113,6 @@ const onSavePressed = React.useCallback(async () => {
 
   } catch (e) {
     const message = e instanceof Error ? e.message : JSON.stringify(e);
-    // setSavingState('none');
     alert('Failed to save!', `An unexpected error occured while trying to save your photo. ${message}`);
   }
 }
@@ -145,7 +134,6 @@ else {
     
   } catch (e) {
     const message = e instanceof Error ? e.message : JSON.stringify(e);
-    // setSavingState('none');
     alert('Failed to save!', `An unexpected error occured while trying to save your photo. ${message}`);
   }
 }
@@ -190,12 +178,7 @@ const frameCloseNnull = () => {
           <PressableOpacity style={styles.button} onPress={onFlashPressed} disabledOpacity={0.4}>
             <IonIcon name={flash === 'on' ? 'flash' : 'flash-off'} color="black" size={24} />
           </PressableOpacity>
-        )}
-    {supportsCameraFlipping && (
-          <PressableOpacity style={styles.button} onPress={onFlipCameraPressed} disabledOpacity={0.4}>
-            <IonIcon name="camera-reverse" color="black" size={24} />
-          </PressableOpacity>
-        )} */}
+        )}*/}
       </View>
     )
   }
@@ -337,23 +320,6 @@ const frameCloseNnull = () => {
             />
             
         ) : null}
-        
-        {/* <View style={styles.backButton}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'rgba(0,0,0,0.2)',
-                padding: 10,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 10,
-                borderWidth: 2,
-                borderColor: '#fff',
-                width: 100,
-              }}
-              onPress={() => setShowCamera(true)}>
-              <Text style={{color: 'white', fontWeight: '500'}}>Back</Text>
-            </TouchableOpacity>
-          </View> */}
 
           <View style={styles.buttonContainer}>
           <View style={styles.buttons}>

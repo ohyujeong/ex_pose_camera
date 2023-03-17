@@ -35,58 +35,9 @@ const walkthrough = [
     },
 ]
 
-const home_tabs = [
-    {
-        id: 0,
-        label: "Product"
-    },
-    {
-        id: 1,
-        label: "My Chart"
-    },
-    {
-        id: 2,
-        label: "Service"
-    }
-]
-
-const dashboard_screens = {
-    home: "Home",
-    category: "Category",
-    promo: "Promo",
-    profile: "Profile",
-}
-
-const bottom_tabs = [
-    {
-        id: 0,
-        label: dashboard_screens.home,
-    },
-    {
-        id: 1,
-        label: dashboard_screens.category,
-    },
-    {
-        id: 2,
-        label: dashboard_screens.promo,
-    },
-    {
-        id: 3,
-        label: dashboard_screens.profile,
-    }
-]
-
-const scan_product_option = {
-    qr: "QR",
-    camera: "CAMERA"
-}
 
 export default {
     walkthrough_01_01_images,
     walkthrough_01_02_images,
-    walkthrough,
-    home_tabs,
-    dashboard_screens,
-    bottom_tabs,
-    scan_product_option
+    walkthrough
 }

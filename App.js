@@ -7,6 +7,7 @@ import {
     Walkthrough,
     
     Home,
+    NonLoginHome,
     Login,
 
     Banner
@@ -27,9 +28,8 @@ const App = () => {
                 <Stack.Screen name="Welcome" component={Welcome} />
                 <Stack.Screen name="Walkthrough" component={Walkthrough} />
 
-                
-
                 <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="NonLoginHome" component={NonLoginHome} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Banner" component={Banner} />
             </Stack.Navigator>
@@ -37,5 +37,4 @@ const App = () => {
     )
 }
 
-{/*<Stack.Screen name="AuthMain" component={AuthMain} /> 25번줄쯤 있어야하는애*/}
 export default App;

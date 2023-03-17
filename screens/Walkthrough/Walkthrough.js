@@ -92,15 +92,10 @@ const Walkthrough = ({route, navigation}) => {
     var sit=0;
     var two=0;
     var whole=0;
+    var count=0;
+    // const [count, setCount] = React.useState(0);
 
-    // const [half, setHalf] = React.useState(0);
-    // const [many, setMany] = React.useState(0);
-    // const [selfie, setSelfie] = React.useState(0);
-    // const [sit, setSit] = React.useState(0);
-    // const [two, setTwo] = React.useState(0);
-    // const [whole, setWhole] = React.useState(0);
-    //selfie가 나와도 업데이트가 안되고 있음
-    const increaseNumber = (result) => {
+    const increaseNumber = (result, length) => {
         
             switch(result){
                 case 'half' :
@@ -136,30 +131,34 @@ const Walkthrough = ({route, navigation}) => {
                 default :  null
             }
 
-            // var resultList = {
-            //     half: half, 
-            //     many: many, 
-            //     selfie: selfie, 
-            //     sit: sit,
-            //     two: two,
-            //     whole: whole};
+            var resultList = {
+                half: half, 
+                many: many, 
+                selfie: selfie, 
+                sit: sit,
+                two: two,
+                whole: whole};
     
-            // const json = JSON.stringify(resultList);
+            const json = JSON.stringify(resultList);
+            // console.log('result load: '+ json);
+            count=count+1;
+            // console.log('count: ' + count);
+            // console.log('length: ' + length);
+            if (count===length) {sendResult(json)}
 
             // return json;
             }
 
     
-    const openImagePicker = async () => {
+    const openImagePicker = () => {
 
-        // console.log (resultList)
-       await ImageCropPicker.openPicker({
+       ImageCropPicker.openPicker({
             multiple: true,
         })
-        .then(setChoosestate(true))
-        .then ( image => {
+        .then ( async image => {
         for (let i =0; i < image.length ; i++) {
                 const imageData = new FormData()
+                const length = image.length;
 
                 imageData.append("file", {
                     uri: image[i].path,
@@ -168,52 +167,37 @@ const Walkthrough = ({route, navigation}) => {
                     type: 'image/png'
                 })
 
-                // console.log(imageData)
-
-                fetch('http://9f7e-34-143-243-62.ngrok.io', {
+               fetch('http://c677-35-204-219-29.ngrok.io', {
                     method: 'POST',
                     body: imageData
                 })
                 .then(response => response.json())
                 .then(response => {
-                    // const result=response.class_name;
-                    // console.log(result);
-                    increaseNumber(response.class_name);
-                })
+                    increaseNumber(response.class_name, length);
+                })          
             }
         } 
         )
-
-        //이거 나오게 하는 거 async로 라도 해보기
-        sendResult();
     }
 
-    const sendResult = () => {
+    const sendResult = (json) => {
 
-        var resultList = {
-                half: half, 
-                many: many, 
-                selfie: selfie, 
-                sit: sit,
-                two: two,
-                whole: whole};
-    
-        const json = JSON.stringify(resultList);
-
-        console.log('send load' + json);
+        setChoosestate(true);
+        console.log('result in sendFunc: '+ json);
 
         fetch(`${BaseUrl}/user/update`, {
             method : "PATCH",
             body: json,
             headers : {
+                'Content-type': 'application/json; charset=UTF-8',
                 Authorization : `Bearer ${token}`,
             }
-            }) 
+            })
             .then((res) => res.json())
+            .then(console.log('photo sended'))
             .then(res => console.log(res))
             .catch(console.error)
     }
-    // console.log(json)
 
     //API정보 이용 시
     const [userName, setUserName] = React.useState("Ex.Pose");
