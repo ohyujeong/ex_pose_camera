@@ -125,24 +125,19 @@ const onSavePressed = React.useCallback(async () => {
         paddingHorizontal: SIZES.padding,
         alignItems: 'center',
         backgroundColor: '#251B37',
-        zIndex: 1
+        zIndex: 1,
+        justifyContent: 'space-between'
       }}
       >
 
     {/*close*/}
     <IconButton
       icon={icons.close}
-      iconStyle={{
-        paddingLeft: 30,
-      }}
       onPress={() => navigation.goBack()}
       />
 
     <IconButton
       icon={icons.cameraFlipIcon}
-      iconStyle={{
-        paddingRight:650,
-      }}
       onPress={()=> {
         camView === 'back' ? setCamView('front') : setCamView('back')
       }}
