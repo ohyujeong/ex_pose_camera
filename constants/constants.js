@@ -28,11 +28,6 @@ const walkthrough = [
         title: "혼자도 여럿이도 가능",
         sub_title: "필요한 상황에, 분위기에 맞게 재밌는 촬영",
     },
-    {
-        id: 3,
-        title: "무슨말을 하지",
-        sub_title: "졸프 화이팅",
-    },
 ]
 
 

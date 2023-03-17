@@ -42,7 +42,7 @@ class Login extends React.Component {
       // console.log(url);
       // console.log(code);
       this.webview.stopLoading();
-      this.props.navigation.navigate('Banner');
+      this.props.navigation.replace('Banner');
       //전체 데이터 확인 및 access token 저장용 2/11 토큰 불러내기 성공
       fetch(`${KAKAO_AUTH_URL}`)
       .then((res) => res.json())
@@ -51,8 +51,7 @@ class Login extends React.Component {
       const token = res.data.jwtToken
       console.log(token)
       //2/13 토큰 전달 완료
-      this.props.navigation.navigate('Walkthrough', {token: token});
-      // this.props.navigation.reset({routes: [{name:'Walkthrough', params: {token}}]});
+      this.props.navigation.replace('Walkthrough', {token: token});
       })
       .catch(console.error)
 

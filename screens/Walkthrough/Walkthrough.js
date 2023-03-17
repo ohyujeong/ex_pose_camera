@@ -93,39 +93,32 @@ const Walkthrough = ({route, navigation}) => {
     var two=0;
     var whole=0;
     var count=0;
-    // const [count, setCount] = React.useState(0);
 
     const increaseNumber = (result, length) => {
         
             switch(result){
                 case 'half' :
                     half=half+1;
-                    // setHalf(half+1);
                     console.log('update half: ' + half);
                     break;
                 case 'many' :
                     many=many+1;
-                    // setMany(many+1);
                     console.log('update many: ' + many);
                     break;
                 case 'selfie' :
                     selfie=selfie+1;
-                    // setSelfie(selfie+1);
                     console.log('update selfie: ' + selfie);
                     break;
                 case 'sit' :
                     sit=sit+1;
-                    // setSit(sit+1);
                     console.log('update sit: ' + sit);
                     break;
                 case 'two' :
                     two=two+1;
-                    // setTwo(two+1);
                     console.log('update two: ' + two);
                     break;
                 case 'whole' :
                     whole=whole+1;
-                    // setWhole(whole+1);
                     console.log('update whole: ' + whole);
                     break;
                 default :  null
@@ -145,8 +138,8 @@ const Walkthrough = ({route, navigation}) => {
             // console.log('count: ' + count);
             // console.log('length: ' + length);
             if (count===length) {sendResult(json)}
-
-            // return json;
+            //포즈 API적용 후 주석 풀기
+            // if (count===length*2) {sendResult(json)}
             }
 
     
@@ -156,6 +149,8 @@ const Walkthrough = ({route, navigation}) => {
             multiple: true,
         })
         .then ( async image => {
+            setChoosestate(true);
+
         for (let i =0; i < image.length ; i++) {
                 const imageData = new FormData()
                 const length = image.length;
@@ -167,6 +162,7 @@ const Walkthrough = ({route, navigation}) => {
                     type: 'image/png'
                 })
 
+                // 포즈 분석 API
                fetch('http://c677-35-204-219-29.ngrok.io', {
                     method: 'POST',
                     body: imageData
@@ -174,7 +170,17 @@ const Walkthrough = ({route, navigation}) => {
                 .then(response => response.json())
                 .then(response => {
                     increaseNumber(response.class_name, length);
-                })          
+                })
+                
+                // 인원분석 API
+                // fetch('http://c677-35-204-219-29.ngrok.io', {
+                //     method: 'POST',
+                //     body: imageData
+                // })
+                // .then(response => response.json())
+                // .then(response => {
+                //     increaseNumber(response.class_name, length);
+                // }) 
             }
         } 
         )
@@ -182,8 +188,8 @@ const Walkthrough = ({route, navigation}) => {
 
     const sendResult = (json) => {
 
-        setChoosestate(true);
-        console.log('result in sendFunc: '+ json);
+        setChoosestate(false);
+        // console.log('result in sendFunc: '+ json);
 
         fetch(`${BaseUrl}/user/update`, {
             method : "PATCH",
@@ -194,9 +200,12 @@ const Walkthrough = ({route, navigation}) => {
             }
             })
             .then((res) => res.json())
-            .then(console.log('photo sended'))
             .then(res => console.log(res))
             .catch(console.error)
+
+            return(
+                navigation.navigate("Home", {token: token})
+            )
     }
 
     //API정보 이용 시
@@ -225,7 +234,7 @@ const Walkthrough = ({route, navigation}) => {
                 .catch(console.error)
     }
 
-    userNameInfo();
+    
 
     const scrollX = React.useRef(new Animated.Value(0)).current;
 
@@ -267,6 +276,7 @@ const Walkthrough = ({route, navigation}) => {
     }
 
     function renderFooter() {
+        userNameInfo();
 
         const selectAlert = () => {
             Alert.alert('사진을 분석합니다','취향 분석을 위해 좋아하는 인물 사진을 10장 이상 선택해 주세요.',
@@ -283,7 +293,6 @@ const Walkthrough = ({route, navigation}) => {
                 <Dots />
 
                 {/*Buttons*/}
-                {chooseState ? <View></View> :   
                    <View
                    style={{
                     flexDirection: 'row',
@@ -305,7 +314,7 @@ const Walkthrough = ({route, navigation}) => {
                         onPress= {selectAlert}
                     />
                     </View>
-                }
+                
             </View>
         )
     }

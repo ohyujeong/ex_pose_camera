@@ -152,7 +152,7 @@ const frameCloseNnull = () => {
       <View
        style={{
         flexDirection:'row',
-        paddingTop: SIZES.padding * 2,
+        paddingTop: SIZES.padding,
         paddingBottom: SIZES.radius,
         paddingHorizontal: SIZES.padding,
         alignItems: 'center',
@@ -164,11 +164,18 @@ const frameCloseNnull = () => {
     {/*close*/}
     <IconButton
       icon={icons.close}
+      iconStyle={{
+        paddingLeft: 30,
+      }}
       onPress={() => navigation.goBack()}
       />
 
+    {/* Camera Flip */}
     <IconButton
       icon={icons.cameraFlipIcon}
+      iconStyle={{
+        paddingRight:650,
+      }}
       onPress={()=> {
         camView === 'back' ? setCamView('front') : setCamView('back')
       }}
