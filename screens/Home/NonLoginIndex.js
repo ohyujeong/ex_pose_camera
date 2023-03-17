@@ -132,11 +132,17 @@ const onSavePressed = React.useCallback(async () => {
     {/*close*/}
     <IconButton
       icon={icons.close}
+      iconStyle={{
+        paddingLeft: 30,
+      }}
       onPress={() => navigation.goBack()}
       />
 
     <IconButton
       icon={icons.cameraFlipIcon}
+      iconStyle={{
+        paddingRight:650,
+      }}
       onPress={()=> {
         camView === 'back' ? setCamView('front') : setCamView('back')
       }}
@@ -258,7 +264,6 @@ const onSavePressed = React.useCallback(async () => {
         <NonLoginFilterModal
         isVisible={showNonLoginFilterModal}
         onClose={() => setShowNonLoginFilterModal(false)}
-        //자식 FilterModal로 token전달
         loadFrameModal={loadFrameModal}
         BaseUrl={BaseUrl}
         />}
