@@ -99,29 +99,43 @@ const Walkthrough = ({route, navigation}) => {
             switch(result){
                 case 'half' :
                     half=half+1;
+                    count=count+1;
                     console.log('update half: ' + half);
+                    console.log('count: ' + count);
                     break;
                 case 'many' :
                     many=many+1;
+                    count=count+1;
                     console.log('update many: ' + many);
+                    console.log('count: ' + count);
                     break;
                 case 'selfie' :
                     selfie=selfie+1;
+                    count=count+1;
                     console.log('update selfie: ' + selfie);
+                    console.log('count: ' + count);
                     break;
                 case 'sit' :
                     sit=sit+1;
+                    count=count+1;
                     console.log('update sit: ' + sit);
+                    console.log('count: ' + count);
                     break;
                 case 'two' :
                     two=two+1;
+                    count=count+1;
                     console.log('update two: ' + two);
+                    console.log('count: ' + count);
                     break;
                 case 'whole' :
                     whole=whole+1;
+                    count=count+1;
                     console.log('update whole: ' + whole);
+                    console.log('count: ' + count);
                     break;
-                default :  null
+                default :  
+                count=count+1;
+                console.log('count: ' + count);
             }
 
             var resultList = {
@@ -134,12 +148,11 @@ const Walkthrough = ({route, navigation}) => {
     
             const json = JSON.stringify(resultList);
             // console.log('result load: '+ json);
-            count=count+1;
-            // console.log('count: ' + count);
-            // console.log('length: ' + length);
-            if (count===length) {sendResult(json)}
-            //포즈 API적용 후 주석 풀기
-            // if (count===length*2) {sendResult(json)}
+            
+            
+            console.log('length: ' + length);
+            console.log(json);
+            if (count===length*2) {sendResult(json)}
             }
 
     
@@ -148,8 +161,8 @@ const Walkthrough = ({route, navigation}) => {
        ImageCropPicker.openPicker({
             multiple: true,
         })
-        .then ( async image => {
-            setChoosestate(true);
+        .then ( image => {
+        setChoosestate(true);
 
         for (let i =0; i < image.length ; i++) {
                 const imageData = new FormData()
@@ -163,7 +176,7 @@ const Walkthrough = ({route, navigation}) => {
                 })
 
                 // 포즈 분석 API
-               fetch('http://c677-35-204-219-29.ngrok.io', {
+               fetch('http://6595-34-87-43-18.ngrok.io', {
                     method: 'POST',
                     body: imageData
                 })
@@ -171,16 +184,17 @@ const Walkthrough = ({route, navigation}) => {
                 .then(response => {
                     increaseNumber(response.class_name, length);
                 })
-                
+                .then(
                 // 인원분석 API
-                // fetch('http://c677-35-204-219-29.ngrok.io', {
-                //     method: 'POST',
-                //     body: imageData
-                // })
-                // .then(response => response.json())
-                // .then(response => {
-                //     increaseNumber(response.class_name, length);
-                // }) 
+                fetch('http://b1ac-34-90-222-40.ngrok.io', {
+                    method: 'POST',
+                    body: imageData
+                })
+                .then(response => response.json())
+                .then(response => {
+                    increaseNumber(response.class_name, length);
+                }) 
+                )
             }
         } 
         )
