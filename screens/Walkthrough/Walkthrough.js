@@ -86,16 +86,28 @@ const styles = StyleSheet.create({
 
 const Walkthrough = ({route, navigation}) => {
 
-    // Walkthrough2
-    const [walkthrough2Animate, setWalkthrough2Animate] = React.useState(false)
+    React.useEffect(() => {userNameInfo()},[])
 
-    const onViewChangeRef = React.useRef(({ viewableItems, changed }) => 
-    {
-        if (viewableItems[0].index == 1) {
-            setWalkthrough2Animate(true)
+    //User정보 호출
+        const userNameInfo = () => {
+
+            const userInfoApi = `${BaseUrl}/user/me`;
+    
+            //사용자 데이터 fetch 정보 호출 완료
+            fetch(`${userInfoApi}`, {
+                    method : "GET",
+                    headers : {
+                        Authorization : `Bearer ${token}`
+                    }
+                    }) 
+                    .then((res) => res.json())
+                    .then(res => {
+                    setUserName(res.nickname)
+                    console.log(userName)
+                    })
+                    .catch(console.error)
         }
-    }
-    )
+    
 
     const [chooseState, setChoosestate] = React.useState(false);
     const BaseUrl = "http://52.79.250.39:8080";
@@ -161,7 +173,6 @@ const Walkthrough = ({route, navigation}) => {
                 whole: whole};
     
             const json = JSON.stringify(resultList);
-            // console.log('result load: '+ json);
             
             console.log('length: ' + length);
             console.log(json);
@@ -189,7 +200,7 @@ const Walkthrough = ({route, navigation}) => {
                 })
 
                 // 포즈 분석 API
-               fetch('http://6595-34-87-43-18.ngrok.io', {
+               fetch('http://f381-34-126-171-33.ngrok.io', {
                     method: 'POST',
                     body: imageData
                 })
@@ -199,7 +210,7 @@ const Walkthrough = ({route, navigation}) => {
                 })
                 .then(
                 // 인원분석 API
-                fetch('http://b1ac-34-90-222-40.ngrok.io', {
+                fetch('http://58e6-34-125-44-199.ngrok.io', {
                     method: 'POST',
                     body: imageData
                 })
@@ -216,7 +227,6 @@ const Walkthrough = ({route, navigation}) => {
     const sendResult = (json) => {
 
         setChoosestate(false);
-        // console.log('result in sendFunc: '+ json);
 
         fetch(`${BaseUrl}/user/update`, {
             method : "PATCH",
@@ -238,30 +248,10 @@ const Walkthrough = ({route, navigation}) => {
     //API정보 이용 시
     const [userName, setUserName] = React.useState("Ex.Pose");
 
-    // //토큰 전달 완료
+    //토큰 전달
     const {token} = route.params;
 
-    // //User정보 호출 완료
-    const userNameInfo = () => {
 
-        const userInfoApi = `${BaseUrl}/user/me`;
-
-        //사용자 데이터 fetch 정보 호출 완료
-        fetch(`${userInfoApi}`, {
-                method : "GET",
-                headers : {
-                    Authorization : `Bearer ${token}`
-                }
-                }) 
-                .then((res) => res.json())
-                .then(res => {
-                setUserName(res.nickname)
-                console.log(userName)
-                })
-                .catch(console.error)
-    }
-
-    
 
     const scrollX = React.useRef(new Animated.Value(0)).current;
 
@@ -303,11 +293,14 @@ const Walkthrough = ({route, navigation}) => {
     }
 
     function renderFooter() {
-        userNameInfo();
+        
 
         const selectAlert = () => {
-            Alert.alert('사진을 분석합니다','취향 분석을 위해 좋아하는 인물 사진을 10장 이상 선택해 주세요.',
-                        [{text: '이해했어요', onPress: () => openImagePicker()}],
+            Alert.alert('사진 정보 이용 동의',`취향 분석을 위해 좋아하는 인물 사진을 10장 이상 선택해 주세요.
+
+사진은 분석을 위해서만 사용되고 폐기됩니다. 
+동의 후 서비스 이용이 가능합니다.`,
+                        [{text: '동의합니다', onPress: () => openImagePicker()}],
                         {cancelable: true}
                         )
 
@@ -320,6 +313,7 @@ const Walkthrough = ({route, navigation}) => {
                 <Dots />
 
                 {/*Buttons*/}
+                {chooseState ? <View></View>: 
                    <View
                    style={{
                     flexDirection: 'row',
@@ -341,7 +335,7 @@ const Walkthrough = ({route, navigation}) => {
                         onPress= {selectAlert}
                     />
                     </View>
-                
+                }  
             </View>
         )
     }

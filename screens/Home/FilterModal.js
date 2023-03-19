@@ -27,7 +27,7 @@ const FilterModal = ({ isVisible, onClose, token, loadFrameModal, BaseUrl }) => 
   const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   //selected 시도중
-  const [selectedCategory, setSelectedCategory] = React.useState('half');
+  const [selectedCategory, setSelectedCategory] = React.useState('rec');
 
   //좋아요 클릭 시 reload 할 때
   const [active, setActive] = React.useState(false);
