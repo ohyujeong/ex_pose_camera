@@ -41,7 +41,6 @@ const NonLoginHome = ({ navigation }) => {
   //플래시, 전환 hook
   // const [flash, setFlash] = React.useState<'off' | 'on'>('off');
   // const supportsFlash = device?.hasFlash ?? false;
-  // const {savingState, setSavingState} = React.useState<'none' | 'saving' | 'saved'>('none');
 
   const devices = useCameraDevices();
   const device = camView === 'back' ? devices.back :devices.front;
@@ -332,7 +331,6 @@ const onSavePressed = React.useCallback(async () => {
   
 }
 
-//사진 저장 페이지 style, 추후 정리 필요
 const styles = StyleSheet.create({
   container: {
     flex: 1,

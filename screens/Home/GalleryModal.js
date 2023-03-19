@@ -31,7 +31,7 @@ const GalleryModal = ({ isVisible, onClose }) => {
     const getPhotos = async () => {
       const photos = await CameraRoll.getPhotos
       ({
-        first: 10
+        first: 50
       })
   
       setNodes(photos.edges.map(edge => edge.node))
@@ -102,7 +102,9 @@ const GalleryModal = ({ isVisible, onClose }) => {
                         style={{
                           height: 100,
                           minWidth: 100,
-                          flex: 1
+                          flex: 1,
+                          marginHorizontal:5,
+                          marginVertical: 5
                         }}
                         source={{uri: node.image.uri}}/>
 
@@ -119,7 +121,7 @@ const GalleryModal = ({ isVisible, onClose }) => {
   }
   const modalY = modalAnimatedValue.interpolate({
     inputRange: [0,1],
-    outputRange: [SIZES.height, SIZES.height-759]
+    outputRange: [SIZES.height, 1]
   });
 
   useEffect(()=> {
