@@ -10,6 +10,8 @@ import {
 import { TextButton } from "../../components"; 
 import { COLORS, SIZES, constants } from "../../constants";
 import Walkthrough1 from './Walkthrough1';
+import Walkthrough2 from './Walkthrough2';
+import Walkthrough3 from './Walkthrough3';
 
 import ImageCropPicker from 'react-native-image-crop-picker';
 
@@ -83,12 +85,24 @@ const styles = StyleSheet.create({
 
 
 const Walkthrough = ({route, navigation}) => {
+
+    // Walkthrough2
+    const [walkthrough2Animate, setWalkthrough2Animate] = React.useState(false)
+
+    const onViewChangeRef = React.useRef(({ viewableItems, changed }) => 
+    {
+        if (viewableItems[0].index == 1) {
+            setWalkthrough2Animate(true)
+        }
+    }
+    )
+
     const [chooseState, setChoosestate] = React.useState(false);
     const BaseUrl = "http://52.79.250.39:8080";
 
-    var half = 0;
-    var many =0;
-    var selfie =0;
+    var half=0;
+    var many=0;
+    var selfie=0;
     var sit=0;
     var two=0;
     var whole=0;
@@ -148,7 +162,6 @@ const Walkthrough = ({route, navigation}) => {
     
             const json = JSON.stringify(resultList);
             // console.log('result load: '+ json);
-            
             
             console.log('length: ' + length);
             console.log(json);
@@ -376,6 +389,9 @@ const Walkthrough = ({route, navigation}) => {
                                 }}
                             >
                                 {index == 0 && <Walkthrough1/>}
+                                {index == 1 && <Walkthrough2/>}
+                                {index == 2 && <Walkthrough3/>}
+
                             </View>
 
                             {/*Title & Descriptions*/}

@@ -32,10 +32,10 @@ const walkthrough_02_06 = require('../assets/images/walkthrough/walkthrough_02_0
 const walkthrough_02_07 = require('../assets/images/walkthrough/walkthrough_02_07.png')
 const walkthrough_03_01 = require('../assets/images/walkthrough/walkthrough_03_01.png')
 const walkthrough_03_02 = require('../assets/images/walkthrough/walkthrough_03_02.png')
-const walkthrough_04_01 = require('../assets/images/walkthrough/walkthrough_04_01.png')
-const walkthrough_04_02 = require('../assets/images/walkthrough/walkthrough_04_02.png')
-const walkthrough_04_03 = require('../assets/images/walkthrough/walkthrough_04_03.png')
-const walkthrough_04_04 = require('../assets/images/walkthrough/walkthrough_04_04.png')
+const walkthrough_03_03 = require('../assets/images/walkthrough/walkthrough_03_03.png')
+const walkthrough_03_04 = require('../assets/images/walkthrough/walkthrough_03_04.png')
+const walkthrough_03_05 = require('../assets/images/walkthrough/walkthrough_03_05.png')
+const walkthrough_03_06 = require('../assets/images/walkthrough/walkthrough_03_06.png')
 
 // Dummy
 const luggage_01 = require('../assets/images/dummy/luggage_01.png')
@@ -78,10 +78,10 @@ export default {
     walkthrough_02_07,
     walkthrough_03_01,
     walkthrough_03_02,
-    walkthrough_04_01,
-    walkthrough_04_02,
-    walkthrough_04_03,
-    walkthrough_04_04,
+    walkthrough_03_03,
+    walkthrough_03_04,
+    walkthrough_03_05,
+    walkthrough_03_06,
 
     luggage_01,
     kakao_login_large_wide
