@@ -10,9 +10,10 @@ import {constants} from "../../constants";
 
 const ITEM_WIDTH = 120;
 
-const Walkthrough1 = () => {
-  const [row1Images, setRowImages] = React.useState([
-    ...constants.walkthrough_01_01_images
+const Walkthrough2 = () => {
+  
+  const [row3Images, setRowImages] = React.useState([
+    ...constants.walkthrough_03_01_images
   ])
 
   const [currentPosition,setCurrentPosition] = React.useState(0)
@@ -27,9 +28,9 @@ const Walkthrough1 = () => {
         delcelerationRate="fast"
         horizontal
         showsHorizontalScrollIndicator={false}
-        listKey="Slider1"
-        keyExtractor={(_, index)=> `Slider1_${index}`}
-        data={row1Images}
+        listKey="Slider3"
+        keyExtractor={(_, index)=> `Slider3_${index}`}
+        data={row3Images}
         renderItem={({item, index}) => {
       return (
         <View
@@ -57,4 +58,4 @@ const Walkthrough1 = () => {
   )
 }
 
-export default Walkthrough1;
+export default Walkthrough2;

@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, Linking } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text } from 'react-native';
 
 import { IconButton, TextButton } from "../../components";
-import { COLORS, FONTS, SIZES, images } from '../../constants';
+import { COLORS, SIZES, images } from '../../constants';
 
 const styles = StyleSheet.create({
     bg: {
@@ -83,7 +82,7 @@ const Welcome = ({ navigation }) => {
                     contentContainerStyle={styles.nonMembers}
                     label="비회원으로 시작하기"
                     labelStyle={styles.nonMembers}
-                    onPress={() => navigation.navigate("Home")}
+                    onPress={() => navigation.navigate("NonLoginHome")}
                 />
             </View>
         </View>

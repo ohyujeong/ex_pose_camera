@@ -1,37 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   View,
-  Text,
   Animated,
-  ScrollView,
-  TouchableWithoutFeedback,
-  Modal,
-  TouchableOpacity,
-  ActivityIndicator,
   Image
 } from 'react-native';
 
-import { COLORS, FONTS, SIZES, constants, icons, dummyData } from "../../constants";
-
-import { FlatList } from 'react-native-gesture-handler';
-
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { icons } from "../../constants";
 
 import { IconButton } from "../../components";
 
 
-const FrameModal = ({ isVisible, onClose, selectedFrameId, BaseUrl }) => {
-
-  const modalAnimatedValue = React.useRef(new Animated.Value(0)).current
-  const [showFrameModal, setShowFrameModal] = React.useState(isVisible)
+const FrameModal = ({ onClose, selectedFrameId, BaseUrl }) => {
 
   const frameId = selectedFrameId
     
   console.log(frameId)
   const frameUrl = `${BaseUrl}/frame/{frameId}?frameId=${frameId}`;
-  // const [framePath, setFramePath] = React.useState('')
   const [data, setData] = React.useState([]);
-  // const [isLoading, setIsLoading] = React.useState(false);
   
 React.useEffect(()=> {
   fetch(`${frameUrl}`)

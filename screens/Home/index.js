@@ -1,33 +1,22 @@
 import React from 'react';
 
-{/*part3영상내용 중 home+scanproduct*/}
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
-  Linking,
   Platform,
   PermissionsAndroid,
-  StyleSheet,
-  ScrollView,
-  flexDirection
+  StyleSheet
 } from 'react-native';
 
-import {Camera, useCameraDevices} from "react-native-vision-camera";
+import {Camera, useCameraDevices } from "react-native-vision-camera";
 
-import { 
-  IconButton,
-  TextButton } from "../../components";
+import { IconButton} from "../../components";
 
 import {
-  COLORS,
   SIZES,
-  FONTS,
-  icons,
-  constants,
-  images,
-  dummyData
+  icons
 } from "../../constants";
 
 import { FilterModal } from "..";
@@ -36,19 +25,6 @@ import { GalleryModal } from "..";
 
 import { FrameModal } from "..";
 
-import Animated,{
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  set
-} from "react-native-reanimated";
-import { FlatList } from 'react-native-gesture-handler';
-import {useRoute} from "@react-navigation/native";
-
-// import RNFS from 'react-native-fs';
-// import IonIcon from 'react-native-vector-icons/Ionicons';
-// import { PressableOpacity } from 'react-native-pressable-opacity';
-// import { SAFE_AREA_PADDING } from './Constants';
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 
 const Home = ({ route, navigation }) => {
@@ -137,7 +113,6 @@ const onSavePressed = React.useCallback(async () => {
 
   } catch (e) {
     const message = e instanceof Error ? e.message : JSON.stringify(e);
-    // setSavingState('none');
     alert('Failed to save!', `An unexpected error occured while trying to save your photo. ${message}`);
   }
 }
@@ -159,7 +134,6 @@ else {
     
   } catch (e) {
     const message = e instanceof Error ? e.message : JSON.stringify(e);
-    // setSavingState('none');
     alert('Failed to save!', `An unexpected error occured while trying to save your photo. ${message}`);
   }
 }
@@ -178,12 +152,13 @@ const frameCloseNnull = () => {
       <View
        style={{
         flexDirection:'row',
-        paddingTop: SIZES.padding * 2,
+        paddingTop: SIZES.padding,
         paddingBottom: SIZES.radius,
         paddingHorizontal: SIZES.padding,
         alignItems: 'center',
         backgroundColor: '#251B37',
-        zIndex: 1
+        zIndex: 1,
+        justifyContent: 'space-between'
       }}
       >
 
@@ -193,6 +168,7 @@ const frameCloseNnull = () => {
       onPress={() => navigation.goBack()}
       />
 
+    {/* Camera Flip */}
     <IconButton
       icon={icons.cameraFlipIcon}
       onPress={()=> {
@@ -204,12 +180,7 @@ const frameCloseNnull = () => {
           <PressableOpacity style={styles.button} onPress={onFlashPressed} disabledOpacity={0.4}>
             <IonIcon name={flash === 'on' ? 'flash' : 'flash-off'} color="black" size={24} />
           </PressableOpacity>
-        )}
-    {supportsCameraFlipping && (
-          <PressableOpacity style={styles.button} onPress={onFlipCameraPressed} disabledOpacity={0.4}>
-            <IonIcon name="camera-reverse" color="black" size={24} />
-          </PressableOpacity>
-        )} */}
+        )}*/}
       </View>
     )
   }
@@ -351,23 +322,6 @@ const frameCloseNnull = () => {
             />
             
         ) : null}
-        
-        <View style={styles.backButton}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'rgba(0,0,0,0.2)',
-                padding: 10,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 10,
-                borderWidth: 2,
-                borderColor: '#fff',
-                width: 100,
-              }}
-              onPress={() => setShowCamera(true)}>
-              <Text style={{color: 'white', fontWeight: '500'}}>Back</Text>
-            </TouchableOpacity>
-          </View>
 
           <View style={styles.buttonContainer}>
           <View style={styles.buttons}>
@@ -379,17 +333,17 @@ const frameCloseNnull = () => {
                   alignItems: 'center',
                   borderRadius: 10,
                   borderWidth: 2,
-                  borderColor: '#77c3ec',
+                  borderColor: '#251B37',
                 }}
                 onPress={() => setShowCamera(true)}>
-                <Text style={{color: '#77c3ec', fontWeight: '500'}}>
-                  Retake
+                <Text style={{color: '#251B37', fontWeight: '500'}}>
+                  재촬영
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={{
-                  backgroundColor: '#77c3ec',
+                  backgroundColor: '#251B37',
                   padding: 10,
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -399,7 +353,7 @@ const frameCloseNnull = () => {
                 }}
                 onPress={onSavePressed}>
                 <Text style={{color: 'white', fontWeight: '500'}}>
-                  Use Photo
+                  저장
                 </Text>
               </TouchableOpacity>
 

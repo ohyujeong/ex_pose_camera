@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
-  Text,
   Animated,
   ScrollView,
-  TouchableWithoutFeedback,
   Modal,
   TouchableOpacity,
-  ActivityIndicator,
   Image
 } from 'react-native';
 
-import { COLORS, FONTS, SIZES, constants, icons, dummyData } from "../../constants";
-
-import { FlatList } from 'react-native-gesture-handler';
+import { SIZES, icons } from "../../constants";
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -34,8 +29,9 @@ const GalleryModal = ({ isVisible, onClose }) => {
   function renderGallery() {
     
     const getPhotos = async () => {
-      const photos = await CameraRoll.getPhotos({
-        first: 10
+      const photos = await CameraRoll.getPhotos
+      ({
+        first: 50
       })
   
       setNodes(photos.edges.map(edge => edge.node))
@@ -106,7 +102,9 @@ const GalleryModal = ({ isVisible, onClose }) => {
                         style={{
                           height: 100,
                           minWidth: 100,
-                          flex: 1
+                          flex: 1,
+                          marginHorizontal:5,
+                          marginVertical: 5
                         }}
                         source={{uri: node.image.uri}}/>
 
@@ -123,7 +121,7 @@ const GalleryModal = ({ isVisible, onClose }) => {
   }
   const modalY = modalAnimatedValue.interpolate({
     inputRange: [0,1],
-    outputRange: [SIZES.height, SIZES.height-759]
+    outputRange: [SIZES.height, 1]
   });
 
   useEffect(()=> {
@@ -176,13 +174,11 @@ const GalleryModal = ({ isVisible, onClose }) => {
                 width: "100%",
                 height: "100%",
                 padding: SIZES.padding,
-                backgroundColor: COLORS.grey
+                backgroundColor: '#251B37'
               }}>
           <View>
             {renderHeader()}
             {renderGallery()}
-            {/* {renderFilterOption()}
-            {frameList(selectedFrameId)} */}
           </View>
             </Animated.View>
 
